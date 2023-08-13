@@ -1,0 +1,35 @@
+logging:
+  level:
+    root: info
+server:
+  http2:
+    enabled: true
+  servlet:
+    encoding:
+      force-response: true
+      force-request: true
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: ${DRIVER_CLASS_NAME}
+    url: jdbc:${DB}://${HOST}:${PORT}/${NAME}?timezone=UTC
+
+    username: ${USERNAME}
+    password: ${PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: ${DDL_AUTO}
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/static/js/
