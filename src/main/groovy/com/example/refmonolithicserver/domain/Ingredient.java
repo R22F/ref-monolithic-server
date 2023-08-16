@@ -6,7 +6,8 @@ import lombok.Getter;
 @Entity
 @Getter
 public class Ingredient{
-    @Id @Column(name = "ingredient_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ingredient_id")
     private Long id;
 
     @Column
@@ -14,7 +15,4 @@ public class Ingredient{
 
     @Column
     private String units; // 단위
-
-    @ManyToOne@JoinColumn(name = "user_id")
-    private User user;
 };
