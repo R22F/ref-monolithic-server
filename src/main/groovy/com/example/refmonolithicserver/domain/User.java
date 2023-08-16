@@ -1,8 +1,6 @@
 package com.example.refmonolithicserver.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -10,18 +8,22 @@ import java.time.LocalDate;
 @Entity
 @Getter
 public class User{
-    @Id @Column(name = "user_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
-    @Column
+
+    @Column(length = 128)
     private String nickname;
 
-    @Column
+    @Column(length = 256)
     private String password;
+
+    @Column(length = 128)
+    private String name;
 
     @Column
     private LocalDate birth;
 
-    @Column
+    @Column(length = 128)
     private String email;
-
 };

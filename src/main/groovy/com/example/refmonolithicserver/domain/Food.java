@@ -11,7 +11,7 @@ public class Food {
     @Id @Column(name = "food_id")
     private Long id;
 
-    @Column
+    @Column(length = 128)
     private String name;
 
     @Column

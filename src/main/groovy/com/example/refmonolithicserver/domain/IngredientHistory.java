@@ -8,7 +8,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 public class IngredientHistory{
-    @Id@Column(name = "ingredient_history_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ingredient_history_id")
     private Long id;
 
     @Column
@@ -35,7 +36,7 @@ public class IngredientHistory{
     @Column
     private Integer expiredPeriod;
 
-    @Column
+    @Column(length = 256)
     private String purchaseUrl;
 
     @ManyToOne @JoinColumn(name = "ingredient_id")
