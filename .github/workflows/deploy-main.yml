@@ -1,0 +1,53 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: sungwon-097/ref
+          stage: main
+          yaml: |
+            name: ref-monolithic-server
+            app: java@17
+            options:
+              ports: 8080
+              env:
+                - name: SPRING_PROFILES_ACTIVE
+                  value: prod
+                - name: DRIVER_CLASS_NAME
+                  value: org.mariadb.jdbc.Driver
+                - name: DB
+                  value: mariadb
+                - name: HOST
+                  value: svc.sel4.cloudtype.app
+                - name: PORT
+                  value: "30810"
+                - name: NAME
+                  value: ref
+                - name: USERNAME
+                  value: root
+                - name: PASSWORD
+                  value: refmariadb!@#
+                - name: DDL_AUTO
+                  value: create-drop
+                - name: DATABASE-PLATFORM
+                  value: org.hibernate.dialect.MariaDBDialect
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: java-springboot
