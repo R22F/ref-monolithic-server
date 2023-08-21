@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/v1")
 @ApiResponse(description = "Test Controller")
