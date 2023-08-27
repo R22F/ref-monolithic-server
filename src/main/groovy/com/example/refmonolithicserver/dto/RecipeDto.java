@@ -1,13 +1,11 @@
 package com.example.refmonolithicserver.dto;
 
-import com.example.refmonolithicserver.domain.Food;
-import com.example.refmonolithicserver.domain.Ingredient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 public record RecipeDto() {
 
@@ -57,5 +55,36 @@ public record RecipeDto() {
         private String name;
         private Integer quantity;
         private String units;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class IngredientResponseDto {
+        private Long id;
+        private String name;
+        private Integer remainQuantity;
+        private LocalDate buyDate;
+        private LocalDate expiredDate;
+        private Integer alertQuantity;
+        private Integer relievedQuantity;
+        private Integer primePrice;
+        private Integer expiredPeriod;
+        private String url;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class IngredientRequestDto {
+        private Long id;
+        private String name;
+        private Integer buyQuantity;
+        private LocalDate buyDate;
+        private Integer alertQuantity;
+        private Integer relievedQuantity;
+        private Integer primePrice;
+        private Integer expiredPeriod;
+        private String url;
     }
 }
