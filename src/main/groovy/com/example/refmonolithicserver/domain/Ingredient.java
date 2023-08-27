@@ -14,5 +14,5 @@ public class Ingredient{
     private String name;
 
     @Column
-    private String units; // 단위
+    private String units;
 };

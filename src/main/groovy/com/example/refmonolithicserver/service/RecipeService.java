@@ -32,12 +32,14 @@ public class RecipeService {
 
     public FoodResponseDto getFoodInRecipe(Long foodId) {
         IngredientDto ingredientDto = new IngredientDto("potato", 200, "g");
-        FoodDto foodDto = new FoodDto(1L, "Potato Pizza", 16000, 5000, List.of(ingredientDto, ingredientDto, ingredientDto));
+        FoodDto foodDto = new FoodDto(foodId, "Potato Pizza", 16000, 5000, List.of(ingredientDto, ingredientDto, ingredientDto));
         return new FoodResponseDto(foodDto);
     }
 
     public FoodResponseDto addFoodInRecipe(Long foodId, FoodRequestDto dto) {
-        return new FoodResponseDto(dto.getFoodDto());
+        FoodDto foodDto = dto.getFoodDto();
+        foodDto.setId(foodId);
+        return new FoodResponseDto(foodDto);
     }
 
     public Long removeFoodInRecipe(Long foodId) {
