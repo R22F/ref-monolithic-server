@@ -12,8 +12,10 @@ import java.util.List;
 public class ManagementService {
 
     public SettlementResponseDto getSettlementInfo() {
-        SettlementDto.Menu menu = new SettlementDto.Menu("Chicken", 10);
-        SettlementDto.Menus menus = new SettlementDto.Menus(List.of(menu, menu, menu));
+        SettlementDto.Menu menu1 = new SettlementDto.Menu("Chicken", 10);
+        SettlementDto.Menu menu2 = new SettlementDto.Menu("Pizza", 3);
+        SettlementDto.Menu menu3 = new SettlementDto.Menu("Pasta", 8);
+        SettlementDto.Menus menus = new SettlementDto.Menus(List.of(menu1, menu2, menu3));
         SettlementDto.Total total = new SettlementDto.Total(menus);
         return new SettlementResponseDto(total, LocalDateTime.now());
     }
