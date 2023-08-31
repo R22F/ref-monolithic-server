@@ -1,5 +1,6 @@
 package com.example.refmonolithicserver.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -7,13 +8,14 @@ import java.time.LocalDate;
 import static com.example.refmonolithicserver.dto.UserDto.*;
 
 @Service
+@Transactional
 public class UserService {
-    public UserSignInResponseDto signin(UserSignInRequestDto dto){
-        return new UserSignInResponseDto(dto.getUserId());
+    public Long signin(UserSignInRequestDto dto){
+        return 1L;
     }
 
-    public UserSignUpResponseDto signup(UserSignUpRequestDto dto){
-        return new UserSignUpResponseDto(1L);
+    public Long signup(UserSignUpRequestDto dto){
+        return 1L;
     }
 
     public UserInfoResponseDto getUserInfo(){

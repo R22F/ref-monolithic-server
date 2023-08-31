@@ -1,55 +1,52 @@
 package com.example.refmonolithicserver.service;
 
+import com.example.refmonolithicserver.domain.Recipe;
+import com.example.refmonolithicserver.repository.RecipeRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.refmonolithicserver.dto.RecipeDto.*;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RecipeService {
 
-    public RecipeResponseDto getRecipe() {
-        IngredientDto ingredientDto = new IngredientDto("potato", 200, "g");
-        FoodDto foodDto1 = new FoodDto(1L, "Potato Pizza", 16000, 5000, List.of(ingredientDto, ingredientDto));
-        FoodDto foodDto2 = new FoodDto(2L, "Fried Chicken", 18000, 7000, List.of(ingredientDto, ingredientDto));
-        FoodDto foodDto3 = new FoodDto(3L, "Burrito", 4500, 1500, List.of(ingredientDto, ingredientDto));
-        return new RecipeResponseDto(
-                List.of(foodDto1, foodDto2, foodDto3)
-        );
+    private final RecipeRepository recipeRepository;
+
+    public Object getRecipe() {
+        return recipeRepository.findAll();
     }
 
-    public RecipeResponseDto addRecipe(RecipeRequestDto dto) {
-        return new RecipeResponseDto(dto.getFoodDtoList());
+    public Object getRecipeById(Long recipeId) {
+        return recipeRepository.findById(recipeId);
     }
 
-    public RecipeResponseDto modifyRecipe(RecipeRequestDto dto) {
-        return new RecipeResponseDto(dto.getFoodDtoList());
+    public Object addRecipe(List<RecipeRequestDto> requestDtoList) {
+        // food, ingredient 검증 로직 추가 필요
+        List<Recipe> savedRecipeList = new ArrayList<>();
+        for(RecipeRequestDto dto:requestDtoList){
+            savedRecipeList.add(recipeRepository.save(dto.toEntity()));
+        }
+        return savedRecipeList;
+    }
+
+    public Object modifyRecipe(Long recipeId, RecipeRequestDto dto) {
+        // food, ingredient 검증 로직 추가 필요
+        return recipeRepository.save(dto.toEntity(recipeId));
     }
 
     public Long removeRecipe(Long id) {
+        recipeRepository.deleteById(id);
         return id;
     }
 
-    public FoodResponseDto getFoodInRecipe(Long foodId) {
-        IngredientDto ingredientDto1 = new IngredientDto("potato", 200, "g");
-        IngredientDto ingredientDto2 = new IngredientDto("cheese", 100, "g");
-        IngredientDto ingredientDto3 = new IngredientDto("olive", 10, "g");
-        FoodDto foodDto = new FoodDto(
-                foodId, "Potato Pizza", 16000, 5000,
-                List.of(ingredientDto1, ingredientDto2, ingredientDto3));
-        return new FoodResponseDto(foodDto);
-    }
-
-    public FoodResponseDto addFoodInRecipe(Long foodId, FoodRequestDto dto) {
-        FoodDto foodDto = dto.getFoodDto();
-        foodDto.setId(foodId);
-        return new FoodResponseDto(foodDto);
-    }
-
-    public Long removeFoodInRecipe(Long foodId) {
+    public Long removeRecipeByFood(Long foodId) {
+        recipeRepository.deleteByFoodId(foodId);
         return foodId;
     }
 }
