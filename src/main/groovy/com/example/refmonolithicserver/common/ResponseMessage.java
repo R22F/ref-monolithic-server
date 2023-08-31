@@ -3,20 +3,20 @@ package com.example.refmonolithicserver.common;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponseMessage<T> {
-    public String signinMessage(T msg){
+public class ResponseMessage{
+    public String signinMessage(Long msg){
         return "Successfully logged in as user <" + msg +">";
     }
 
-    public String signupMessage(T msg){
+    public String signupMessage(Long msg){
         return "Successful sign-up as user <" + msg +">";
     }
 
-    public String createMessage(T msg){
+    public String createMessage(Long msg){
         return "Successful create <" + msg +">";
     }
 
-    public String removeMessage(T msg){
+    public String removeMessage(Long msg){
         return "Successful remove <" + msg +">";
     }
 }
