@@ -1,25 +1,20 @@
 package com.example.refmonolithicserver.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDate;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Food {
-    @Id @Column(name = "food_id")
-    private Long id;
-
-    @Column(length = 128)
-    private String name;
-
-    @Column
-    private Double primePrice;
-
-    @Column
-    private Integer fixedPrice;
-
-    @ManyToOne @JoinColumn(name = "user_id")
-    private User user;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") private Long id;
+    @Column(length = 128) private String name;
+    @Column private Integer fixedPrice; // 판매 금액
+    @Column private Long userId; // private User user;
 }

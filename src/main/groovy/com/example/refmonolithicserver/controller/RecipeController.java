@@ -1,85 +1,87 @@
 package com.example.refmonolithicserver.controller;
 
 import com.example.refmonolithicserver.common.ResponseMessage;
-import com.example.refmonolithicserver.dto.RecipeDto.FoodRequestDto;
 import com.example.refmonolithicserver.dto.RecipeDto.RecipeRequestDto;
 import com.example.refmonolithicserver.service.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/recipe")
+@Tag(name = "RecipeController",description = "RecipeAPI-재료들의 조합")
 public class RecipeController {
 
     private final RecipeService recipeService;
-    private final ResponseMessage<Object> responseMessage;
+    private final ResponseMessage responseMessage;
 
     @GetMapping
-    @Operation(summary = "Retrieve recipe")
+    @Operation(summary = "전체 레시피 정보 출력")
     public ResponseEntity<?> retrieveRecipe() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 recipeService.getRecipe()
         );
     }
 
-    @PostMapping
-    @Operation(summary = "Create recipe")
-    public ResponseEntity<?> createRecipe(@RequestBody RecipeRequestDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                recipeService.addRecipe(dto)
+    @GetMapping("/{recipeId}")
+    @Operation(summary = "Id로 레시피 찾기")
+    public ResponseEntity<?> retrieveRecipe(
+            @PathVariable(value = "recipeId") Long recipeId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                recipeService.getRecipeById(recipeId)
         );
     }
 
-    @PutMapping
-    @Operation(summary = "Update recipe")
-    public ResponseEntity<?> updateRecipe(@RequestBody RecipeRequestDto dto) {
+    @PostMapping
+    @Operation(summary = "새로운 레시피 정보 생성(리스트)")
+    public ResponseEntity<?> createRecipe(
+            @RequestBody List<RecipeRequestDto> requestDtoList
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                recipeService.addRecipe(requestDtoList)
+        );
+    }
+
+    @PutMapping("/{recipeId}")
+    @Operation(summary = "Id에 해당하는 레시피 정보 업데이트")
+    public ResponseEntity<?> updateRecipe(
+            @PathVariable(value = "recipeId") Long recipeId,
+            @RequestBody RecipeRequestDto dto
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(recipeService.modifyRecipe(dto)
+                .body(recipeService.modifyRecipe(recipeId, dto)
         );
     }
 
-    @DeleteMapping()
-    @Operation(summary = "Delete recipe")
-    public ResponseEntity<?> deleteRecipe(@RequestBody Long recipeId) {
+    @DeleteMapping("/{recipeId}")
+    @Operation(summary = "Id에 해당하는 레시피 삭제(단건)")
+    public ResponseEntity<?> deleteRecipe(
+            @PathVariable(value = "recipeId") Long recipeId
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responseMessage.removeMessage(
                         recipeService.removeRecipe(recipeId))
                 );
     }
-
-    @GetMapping("/{foodId}")
-    @Operation(summary = "Retrieve food in recipe")
-    public ResponseEntity<?> retrieveFood(@PathVariable("foodId") Long foodId) {
+    @DeleteMapping("/food/{foodId}")
+    @Operation(summary = "FoodId에 해당하는 레시피 삭제(전체)")
+    public ResponseEntity<?> deleteRecipeByFoodId(
+            @PathVariable(value = "foodId") Long foodId
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(recipeService.getFoodInRecipe(foodId));
-    }
-
-    @PostMapping("/{foodId}")
-    @Operation(summary = "Create food in recipe")
-    public ResponseEntity<?> addFood(
-            @PathVariable("foodId") Long foodId,
-            @RequestBody FoodRequestDto dto) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(recipeService.addFoodInRecipe(foodId, dto));
-    }
-
-
-    @DeleteMapping("/{foodId}")
-    @Operation(summary = "Delete recipe")
-    public ResponseEntity<?> deleteFood(@PathVariable("foodId") Long foodId) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(
-                        responseMessage.removeMessage(recipeService.removeFoodInRecipe(foodId))
+                .body(responseMessage.removeMessage(
+                        recipeService.removeRecipeByFood(foodId))
                 );
     }
 }
