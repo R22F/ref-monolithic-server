@@ -9,21 +9,10 @@ import java.time.LocalDate;
 @Getter
 public class User{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
-
-    @Column(length = 128)
-    private String nickname;
-
-    @Column(length = 256)
-    private String password;
-
-    @Column(length = 128)
-    private String name;
-
-    @Column
-    private LocalDate birth;
-
-    @Column(length = 128)
-    private String email;
+    @Column(name = "id") private Long id;
+    @Column(length = 128) private String nickname;
+    @Column(length = 256) private String password;
+    @Column(length = 128) private String name;
+    @Column private LocalDate birth;
+    @Column(length = 128) private String email;
 };
