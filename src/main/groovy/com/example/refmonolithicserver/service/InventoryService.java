@@ -1,42 +1,37 @@
 package com.example.refmonolithicserver.service;
 
-import com.example.refmonolithicserver.dto.RecipeDto.IngredientRequestDto;
+import com.example.refmonolithicserver.repository.IngredientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
-import static com.example.refmonolithicserver.dto.RecipeDto.IngredientResponseDto;
+import static com.example.refmonolithicserver.dto.IngredientDto.IngredientRequestDto;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class InventoryService {
-    public IngredientResponseDto getItem(Long id) {
-        return new IngredientResponseDto(
-                id, "potato", 1000,
-                LocalDate.of(23,8,11),
-                LocalDate.of(23,8,26),
-                200, 1000, 3000, 15,
-                "https://www.coupang.com/"
-        );
+    
+    private final IngredientRepository ingredientRepository;
+
+    public Object getAll() {
+        return ingredientRepository.findAll();
     }
 
-    public Long addItem(IngredientRequestDto dto) {
-        return dto.getId();
+    public Object getItem(Long id) {
+        return ingredientRepository.findById(id);
     }
 
-    public IngredientResponseDto modifyItem(Long id, IngredientRequestDto dto) {
-        return new IngredientResponseDto(
-                id, dto.getName(), dto.getBuyQuantity(),
-                dto.getBuyDate(),
-                dto.getBuyDate().plusDays(dto.getExpiredPeriod()),
-                dto.getAlertQuantity(),
-                dto.getRelievedQuantity(),
-                dto.getPrimePrice(), dto.getExpiredPeriod(), dto.getUrl()
-                );
+    public Object addItem(IngredientRequestDto dto) {
+        return ingredientRepository.save(dto.toEntity());
+    }
+
+    public Object modifyItem(Long id, IngredientRequestDto dto){
+        return dto.toEntity(id);
     }
 
     public Long removeItem(Long id) {
+        ingredientRepository.deleteById(id);
         return id;
     }
 }

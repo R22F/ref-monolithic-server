@@ -29,20 +29,6 @@ public record UserDto() {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static final class UserSignUpResponseDto{
-        private Long id;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static final class UserSignInResponseDto{
-        private String userId;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static final class UserInfoResponseDto{
         private String userId;
         private String name;
