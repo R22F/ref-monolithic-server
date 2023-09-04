@@ -91,5 +91,68 @@
        ]
      ]
     ]
+  },
+  {
+    "method": "GET(response)",
+    "url": "/settlement",
+    "data": [
+      {
+        "foodId":1,
+        "name":"String",
+        "fixedPrice":1000
+      },
+      {
+        "foodId":2,
+        "name":"String",
+        "fixedPrice":1500
+      }
+    ]
+  },
+  {
+    "method": "POST",
+    "url": "/settlement",
+    "description": "foodId 에 해당하는 recipe 의 quantity 를 ingredient 의 remainQuantity 에서 빼줌, SalesHistory 에 날짜를 추가해 데이터 추가",
+    "data": {
+      "sum": 10000,
+      "foods": [
+        {
+          "foodId":1,
+          "name":"String",
+          "fixedPrice":1000,
+          "count":10
+        },
+        {
+          "foodId":2,
+          "name":"String",
+          "fixedPrice":1500,
+          "count":15
+        }
+      ]
+    }
+  },
+  {
+    "method": "PUT",
+    "url": "/settlement",
+    "data": {
+      "sum": 10000,
+      "foods": [
+        {
+          "foodId":1,
+          "name":"String",
+          "fixedPrice":1000,
+          "count":10
+        },
+        {
+          "foodId":2,
+          "name":"String",
+          "fixedPrice":1500,
+          "count":15
+        }
+      ]
+    }
+  },
+  {
+    "method": "DELETE(response)",
+    "url": "/settlement/{salesId}"
   }
 ]
