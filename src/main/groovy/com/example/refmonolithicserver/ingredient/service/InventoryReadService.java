@@ -5,12 +5,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.example.refmonolithicserver.ingredient.dto.IngredientDto.IngredientRequestDto;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class InventoryService {
+public class InventoryReadService {
     
     private final IngredientRepository ingredientRepository;
 
@@ -21,18 +19,5 @@ public class InventoryService {
 
     public Object getItem(Long id) {
         return ingredientRepository.findById(id);
-    }
-
-    public Object addItem(IngredientRequestDto dto) {
-        return ingredientRepository.save(dto.toEntity());
-    }
-
-    public Object modifyItem(Long id, IngredientRequestDto dto){
-        return dto.toEntity(id);
-    }
-
-    public Long removeItem(Long id) {
-        ingredientRepository.deleteById(id);
-        return id;
     }
 }

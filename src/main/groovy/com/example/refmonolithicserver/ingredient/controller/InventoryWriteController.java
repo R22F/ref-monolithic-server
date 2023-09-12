@@ -2,7 +2,7 @@ package com.example.refmonolithicserver.ingredient.controller;
 
 import com.example.refmonolithicserver.common.ResponseMessage;
 import com.example.refmonolithicserver.ingredient.dto.IngredientDto.IngredientRequestDto;
-import com.example.refmonolithicserver.ingredient.service.InventoryService;
+import com.example.refmonolithicserver.ingredient.service.InventoryWriteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,27 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/inventory")
-@Tag(name = "InventoryController",description = "IngredientAPI-냉장고에 보관 중인 재료")
-public class InventoryController {
+@Tag(name = "InventoryWriteController",description = "IngredientAPI-냉장고에 보관 중인 재료")
+public class InventoryWriteController {
 
-    private final InventoryService inventoryService;
+    private final InventoryWriteService inventoryService;
     private final ResponseMessage responseMessage;
-
-    @GetMapping("/")
-    @Operation(summary = "모든 재고 정보 출력")
-    public ResponseEntity<?> retrieveAll(){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(inventoryService.getAll());
-    }
-
-    @GetMapping("/{ingredientId}")
-    @Operation(summary = "Id에 해당하는 재고 정보 출력")
-    public ResponseEntity<?> retrieveInventory(@PathVariable("ingredientId") Long id){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(inventoryService.getItem(id));
-    }
 
     @PostMapping("/")
     @Operation(summary = "새로운 재고정보 생성")

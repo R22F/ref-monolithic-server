@@ -1,7 +1,8 @@
 package com.example.refmonolithicserver.settlement.controller;
 
+import com.example.refmonolithicserver.settlement.dto.SettlementDto.SalesRequestDto;
 import com.example.refmonolithicserver.settlement.dto.SettlementDto.SettlementRequestDto;
-import com.example.refmonolithicserver.settlement.service.SettlementService;
+import com.example.refmonolithicserver.settlement.service.SettlementWriteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -9,28 +10,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "SettlementController",description = "SettlementAPI-정산 정보")
-public class SettlementController {
+@Tag(name = "SettlementWriteController",description = "SettlementAPI-정산 정보")
+public class SettlementWriteController {
 
-    private final SettlementService settlementService;
-
-    @GetMapping("/settlement/{date}")
-    @Operation(summary = "정산 조회")
-    public ResponseEntity<?> receiveSettlementInfo(
-            @PathVariable("date") LocalDate date
-            ){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(settlementService.get(date));
-    }
+    private final SettlementWriteService settlementService;
 
     @PostMapping("/settlement")
-    @Operation(summary = "정산 요청")
+    @Operation(summary = "정산 요청 - 다중건")
     public ResponseEntity<?> sendSettlementInfo(
             @RequestBody SettlementRequestDto dto
     ){
@@ -40,9 +29,9 @@ public class SettlementController {
     }
 
     @PutMapping("/settlement")
-    @Operation(summary = "정산 수정")
+    @Operation(summary = "정산 수정 - 단건")
     public ResponseEntity<?> modifySettlementInfo(
-            @RequestBody SettlementRequestDto dto
+            @RequestBody SalesRequestDto dto
     ){
         return ResponseEntity
                 .status(HttpStatus.OK)
