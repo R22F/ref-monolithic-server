@@ -10,8 +10,26 @@ import java.util.Optional;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
+    /**
+     *
+     * @param id must not be {@literal null}.
+     * @return Retrieve One
+     */
     @Query("select ingredient from Ingredient ingredient where ingredient.id = :id")
     Optional<Ingredient> findById(@Param("id") Long id);
+
+    /**
+     *
+     * @param userId User info in Security Context
+     * @return All ingredients of user
+     */
     @Query("select ingredient from Ingredient ingredient where ingredient.userId = :userId")
     List<Ingredient> findAllByUserId(@Param("userId") Long userId);
+
+    /**
+     *
+     * @param id must not be {@literal null}.
+     */
+    @Query("delete from Food where id = :id")
+    void deleteById(@Param("id") Long id);
 }
