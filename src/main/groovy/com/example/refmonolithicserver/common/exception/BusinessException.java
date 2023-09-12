@@ -1,7 +1,6 @@
 package com.example.refmonolithicserver.common.exception;
 
 import lombok.Getter;
-import java.util.List;
 
 @Getter
 public class BusinessException extends RuntimeException {
