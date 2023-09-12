@@ -13,6 +13,10 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "ingredient",
+        indexes = {
+                @Index(name = "idx_user_id", columnList = "user_id"),
+        })
 public class Ingredient{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id") private Long id;
@@ -25,5 +29,5 @@ public class Ingredient{
     @Column private String units;
     @Column private Integer relievedQuantity;
     @Column private String url;
-    @Column private Long userId;
+    @Column(name = "user_id") private Long userId;
 };

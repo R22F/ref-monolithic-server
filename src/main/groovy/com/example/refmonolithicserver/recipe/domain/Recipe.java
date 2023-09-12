@@ -10,12 +10,17 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "recipe",
+        indexes = {
+                @Index(name = "idx_food_id", columnList = "food_id"),
+                @Index(name = "idx_ingredient_id", columnList = "ingredient_id"),
+        })
 public class Recipe {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recipe_id") private Long id;
+    @Column(name = "id") private Long id;
     @Column Integer quantity;
-    @Column private Long foodId;
-    @Column private Long ingredientId;
+    @Column(name = "food_id") private Long foodId;
+    @Column(name = "ingredient_id") private Long ingredientId;
     @Transient @Setter private String ingredientName;
 
     public RecipeResponseDto toResponse(Ingredient ingredient){

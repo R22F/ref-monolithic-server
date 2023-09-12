@@ -11,10 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "food",
+        indexes = {
+                @Index(name = "idx_user_id", columnList = "user_id"),
+        })
 public class Food {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id") private Long id;
     @Column(length = 128) private String name;
     @Column private Integer fixedPrice; // 판매 금액
-    @Column private Long userId; // private User user;
+    @Column(name = "user_id") private Long userId; // private User user;
 }
