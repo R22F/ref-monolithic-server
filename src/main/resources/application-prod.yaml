@@ -14,7 +14,6 @@ spring:
   datasource:
     driver-class-name: ${DRIVER_CLASS_NAME}
     url: jdbc:${DB}://${HOST}:${PORT}/${NAME}?timezone=UTC
-
     username: ${USERNAME}
     password: ${PASSWORD}
     hikari:
@@ -33,3 +32,14 @@ spring:
   web:
     resources:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/static/js/
+  sql:
+    init:
+      mode: always
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    groups-order: asc
+    tags-sorter: alpha
+    operations-sorter: method
