@@ -22,21 +22,4 @@ public class Recipe {
     @Column(name = "food_id") private Long foodId;
     @Column(name = "ingredient_id") private Long ingredientId;
     @Transient @Setter private String ingredientName;
-
-    public RecipeResponseDto toResponse(Ingredient ingredient){
-        return RecipeResponseDto.builder()
-                .id(this.id)
-                .quantity(this.quantity)
-                .ingredientName(ingredient.getName())
-                .units(ingredient.getUnits())
-                .build();
-    }
-    public RecipeResponseDto toResponse(Ingredient ingredient, Long recipeId){
-        return RecipeResponseDto.builder()
-                .id(recipeId)
-                .quantity(this.quantity)
-                .ingredientName(ingredient.getName())
-                .units(ingredient.getUnits())
-                .build();
-    }
 }

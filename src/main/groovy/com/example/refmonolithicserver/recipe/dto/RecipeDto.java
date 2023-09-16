@@ -1,5 +1,6 @@
 package com.example.refmonolithicserver.recipe.dto;
 
+import com.example.refmonolithicserver.ingredient.domain.Ingredient;
 import com.example.refmonolithicserver.recipe.domain.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,5 +45,22 @@ public record RecipeDto() {
         private Integer quantity;
         private String ingredientName;
         private String units;
+
+        public RecipeResponseDto toDto(Ingredient ingredient){
+            return RecipeResponseDto.builder()
+                    .id(this.id)
+                    .quantity(this.quantity)
+                    .ingredientName(ingredient.getName())
+                    .units(ingredient.getUnits())
+                    .build();
+        }
+        public RecipeResponseDto toDto(Ingredient ingredient, Long recipeId){
+            return RecipeResponseDto.builder()
+                    .id(recipeId)
+                    .quantity(this.quantity)
+                    .ingredientName(ingredient.getName())
+                    .units(ingredient.getUnits())
+                    .build();
+        }
     }
 }
