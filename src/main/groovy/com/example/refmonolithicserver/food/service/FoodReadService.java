@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.refmonolithicserver.common.exception.ExceptionMessage.FOOD_NOT_FOUND;
+import static com.example.refmonolithicserver.common.exception.ExceptionMessage.INGREDIENT_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class FoodReadService {
@@ -35,8 +38,7 @@ public class FoodReadService {
 
     public Object getRecipeByFoodId(Long foodId) {
 
-        var food = foodRepository.findById(foodId).orElseThrow(() -> new BusinessException(
-                ErrorCode.NOT_FOUND, "해당 FoodId에 해당하는 데이터가 없습니다"));
+        var food = foodRepository.findById(foodId).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND, FOOD_NOT_FOUND));
 
         List<Recipe> recipes = recipeRepository.findByFoodId(foodId);
         List<RecipeResponseDto> responses = new ArrayList<>();
@@ -44,8 +46,8 @@ public class FoodReadService {
         for(Recipe recipe:recipes){
             Ingredient ingredient = ingredientRepository
                     .findById(recipe.getIngredientId())
-                    .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, "재료 ID에 대응되는 재료가 존재하지 않습니다"));
-            responses.add(recipe.toResponse(ingredient));
+                    .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND));
+            responses.add(new RecipeResponseDto().toDto(ingredient));
             primePrice += recipe.getQuantity() * ingredient.getPrimePrice();
         }
         // 원가 = food -> recipe -> recipe.quantity * ingredient.primePrice
