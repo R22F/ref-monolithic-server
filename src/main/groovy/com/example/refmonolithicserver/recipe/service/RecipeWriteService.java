@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.refmonolithicserver.common.exception.ExceptionMessage.INGREDIENT_NOT_FOUND;
 import static com.example.refmonolithicserver.recipe.dto.RecipeDto.RecipeRequestDto;
 
 @Service
@@ -29,7 +30,7 @@ public class RecipeWriteService {
         for(RecipeRequestDto dto:requestDtoList){
             String ingredientName = ingredientRepository
                     .findById(dto.getIngredientId())
-                    .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, "재료 ID에 대응되는 재료가 존재하지 않습니다"))
+                    .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND))
                     .getName();
             savedRecipeList.add(recipeRepository.save(dto.toEntity(ingredientName)));
         }
@@ -41,7 +42,7 @@ public class RecipeWriteService {
         // food, ingredient 검증 로직 추가 필요
         String ingredientName = ingredientRepository
                 .findById(dto.getIngredientId())
-                .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, "재료 ID에 대응되는 재료가 존재하지 않습니다"))
+                .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND))
                 .getName();
         return recipeRepository.save(dto.toEntity(ingredientName, recipeId));
     }
