@@ -19,7 +19,7 @@ public class SettlementWriteController {
     private final SettlementWriteService settlementService;
 
     @PostMapping("/settlement")
-    @Operation(summary = "정산 요청 - 다중건")
+    @Operation(summary = "정산 요청 - 다중건 요청 및 재료 정보 수정")
     public ResponseEntity<?> sendSettlementInfo(
             @RequestBody SettlementRequestDto dto
     ){
@@ -29,7 +29,7 @@ public class SettlementWriteController {
     }
 
     @PutMapping("/settlement")
-    @Operation(summary = "정산 수정 - 단건")
+    @Operation(summary = "정산 수정 - 단건 요청 및 재료 정보 수정")
     public ResponseEntity<?> modifySettlementInfo(
             @RequestBody SalesRequestDto dto
     ){

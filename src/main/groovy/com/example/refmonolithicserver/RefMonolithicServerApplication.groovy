@@ -9,5 +9,4 @@ class RefMonolithicServerApplication {
 	static void main(String[] args) {
 		SpringApplication.run(RefMonolithicServerApplication, args)
 	}
-
 }
