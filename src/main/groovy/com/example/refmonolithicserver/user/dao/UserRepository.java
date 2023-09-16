@@ -3,6 +3,10 @@ package com.example.refmonolithicserver.user.dao;
 import com.example.refmonolithicserver.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-}
+import java.util.Optional;
 
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByNickname(String name);
+    Optional<User> findByEmail(String email);
+}

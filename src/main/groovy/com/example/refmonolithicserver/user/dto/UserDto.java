@@ -22,7 +22,7 @@ public record UserDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static final class UserSignInRequestDto{
-        private String userId;
+        private String username;
         private String password;
     }
 
