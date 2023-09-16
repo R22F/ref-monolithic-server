@@ -7,6 +7,7 @@ import com.example.refmonolithicserver.ingredient.domain.Ingredient;
 import com.example.refmonolithicserver.recipe.dao.RecipeRepository;
 import com.example.refmonolithicserver.recipe.domain.Recipe;
 import com.example.refmonolithicserver.settlement.dao.SalesHistoryRepository;
+import com.example.refmonolithicserver.settlement.domain.SalesHistory;
 import com.example.refmonolithicserver.settlement.dto.SettlementDto.FoodInfo;
 import com.example.refmonolithicserver.settlement.dto.SettlementDto.SalesRequestDto;
 import com.example.refmonolithicserver.settlement.dto.SettlementDto.SettlementRequestDto;
@@ -58,7 +59,7 @@ public class SettlementWriteService {
         return today;
     }
 
-    public LocalDate update(SalesRequestDto dto) {
+    public SalesHistory update(SalesRequestDto dto) {
 
         salesHistoryRepository.save(dto.toEntity(1L));
 
@@ -70,7 +71,7 @@ public class SettlementWriteService {
             int fixedQuantity = ingredient.getRemainQuantity() - recipe.getQuantity();
             ingredientRepository.save(ingredient.modifyQuantity(fixedQuantity));
         }
-        return dto.getSalesDate();
+        return dto.toEntity(1L);
     }
 
     public Long remove(Long salesId) {
