@@ -14,12 +14,12 @@ public class InventoryWriteService {
     
     private final IngredientRepository ingredientRepository;
 
-    public Object addItem(IngredientRequestDto dto) {
-        return ingredientRepository.save(dto.toEntity());
+    public Object addItem(IngredientRequestDto dto, String username) {
+        return ingredientRepository.save(dto.toEntity(username));
     }
 
-    public Object modifyItem(Long id, IngredientRequestDto dto){
-        return dto.toEntity(id);
+    public Object modifyItem(Long id, IngredientRequestDto dto, String username){
+        return dto.toEntity(id, username);
     }
 
     public Long removeItem(Long id) {

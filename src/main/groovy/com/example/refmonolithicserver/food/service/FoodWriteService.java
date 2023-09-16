@@ -15,12 +15,12 @@ public class FoodWriteService {
     private final FoodRepository foodRepository;
     private final RecipeRepository recipeRepository;
 
-    public Object addItem(FoodRequestDto dto) {
-        return foodRepository.save(dto.toEntity(1L));
+    public Object addItem(FoodRequestDto dto, String username) {
+        return foodRepository.save(dto.toEntity(username));
     }
 
-    public Object modifyItem(Long id,  FoodRequestDto dto) {
-        return foodRepository.save(dto.toEntity(1L, id));
+    public Object modifyItem(Long id,  FoodRequestDto dto, String username) {
+        return foodRepository.save(dto.toEntity(username, id));
     }
 
     public Long removeItem(Long id) {

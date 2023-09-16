@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "food",
         indexes = {
-                @Index(name = "idx_user_id", columnList = "user_id"),
+                @Index(name = "idx_user", columnList = "username"),
         })
 public class Food {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id") private Long id;
     @Column(length = 128) private String name;
     @Column private Integer fixedPrice; // 판매 금액
-    @Column(name = "user_id") private Long userId; // private User user;
+    @Column(name = "username") private String username;
 }

@@ -17,7 +17,7 @@ import java.time.LocalDate;
         indexes = {
             @Index(name = "idx_sales_date", columnList = "sales_date"),
             @Index(name = "idx_food_id", columnList = "food_id"),
-            @Index(name = "idx_user_id", columnList = "user_id")
+            @Index(name = "idx_user", columnList = "username")
         })
 public class SalesHistory{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class SalesHistory{
     @Column(name = "food_id") private Long foodId;
     // 여기까지 foodId에 대한 부분 함수 종속
 
-    @Column(name = "user_id") private Long userId;
+    @Column(name = "username") private String username;
 
     public Integer getTotalPrice(){
         return this.fixedPrice * this.count;

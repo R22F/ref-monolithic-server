@@ -20,11 +20,11 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     /**
      *
-     * @param userId User info in Security Context
+     * @param username User info in Security Context
      * @return All ingredients of user
      */
-    @Query("select ingredient from Ingredient ingredient where ingredient.userId = :userId")
-    List<Ingredient> findAllByUserId(@Param("userId") Long userId);
+    @Query("select ingredient from Ingredient ingredient where ingredient.username = :username")
+    List<Ingredient> findAllByUserId(@Param("username") String username);
 
     /**
      *

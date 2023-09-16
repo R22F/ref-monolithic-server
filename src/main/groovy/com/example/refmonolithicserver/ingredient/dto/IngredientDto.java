@@ -23,7 +23,7 @@ public record IngredientDto() {
         private Integer relievedQuantity;
         private String url;
 
-        public Ingredient toEntity(){
+        public Ingredient toEntity(String username){
             return Ingredient.builder()
                     .name(this.name)
                     .remainQuantity(this.remainQuantity)
@@ -34,11 +34,11 @@ public record IngredientDto() {
                     .units(this.units)
                     .relievedQuantity(this.relievedQuantity)
                     .url(this.url)
-                    .userId(1L)
+                    .username(username)
                     .build();
         }
 
-        public Ingredient toEntity(Long id){
+        public Ingredient toEntity(Long id, String username){
             return Ingredient.builder()
                     .id(id)
                     .name(this.name)
@@ -50,7 +50,7 @@ public record IngredientDto() {
                     .units(this.units)
                     .relievedQuantity(this.relievedQuantity)
                     .url(this.url)
-                    .userId(1L)
+                    .username(username)
                     .build();
         }
     }

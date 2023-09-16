@@ -27,9 +27,9 @@ public class FoodReadService {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
 
-    public Object getAll() {
+    public Object getAll(String username) {
         // userId를 찾아 대입
-        return foodRepository.findAllByUserId(1L);
+        return foodRepository.findAllByUserId(username);
     }
 
     public Object getItem(Long id) {
@@ -60,8 +60,8 @@ public class FoodReadService {
                 responses);
     }
 
-    public Object getRecipesAll() {
-        List<Food> foods = foodRepository.findAllByUserId(1L);
+    public Object getRecipesAll(String username) {
+        List<Food> foods = foodRepository.findAllByUserId(username);
         var recipes = new ArrayList<>();
         for (Food food:foods) {
             recipes.add(getRecipeByFoodId(food.getId()));

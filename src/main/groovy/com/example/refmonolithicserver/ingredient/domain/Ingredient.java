@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "ingredient",
         indexes = {
-                @Index(name = "idx_user_id", columnList = "user_id"),
+                @Index(name = "idx_user", columnList = "username"),
         })
 public class Ingredient{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Ingredient{
     @Column private String units;
     @Column private Integer relievedQuantity;
     @Column private String url;
-    @Column(name = "user_id") private Long userId;
+    @Column(name = "username") private String username;
 
     public Ingredient modifyQuantity(int fixedQuantity){
         this.remainQuantity = fixedQuantity;
