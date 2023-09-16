@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Builder
+@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ingredient",
@@ -30,4 +32,12 @@ public class Ingredient{
     @Column private Integer relievedQuantity;
     @Column private String url;
     @Column(name = "user_id") private Long userId;
+
+    public Ingredient modifyQuantity(int fixedQuantity){
+        this.remainQuantity = fixedQuantity;
+        if (this.remainQuantity <= alertQuantity){
+            log.warn("RemainQuantity is lower than AlertQuantity");
+        }
+        return this;
+    }
 };
