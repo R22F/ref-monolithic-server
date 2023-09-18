@@ -20,11 +20,11 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 
     /**
      *
-     * @param userId User info in Security Context
+     * @param username User info in Security Context
      * @return All foods of user
      */
-    @Query("select food from Food food where food.userId = :userId")
-    List<Food> findAllByUserId(@Param("userId") Long userId);
+    @Query("select food from Food food where food.username = :username")
+    List<Food> findAllByUserId(@Param("username") String username);
 
     /**
      *

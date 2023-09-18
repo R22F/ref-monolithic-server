@@ -17,19 +17,19 @@ public record FoodDto() {
         private String name;
         private Integer fixedPrice;
 
-        public Food toEntity(Long userId){
+        public Food toEntity(String username){
             return Food.builder()
                     .name(this.name)
                     .fixedPrice(this.fixedPrice)
-                    .userId(userId)
+                    .username(username)
                     .build();
         }
-        public Food toEntity(Long userId, Long id){
+        public Food toEntity(String username, Long id){
             return Food.builder()
                     .id(id)
                     .name(this.name)
                     .fixedPrice(this.fixedPrice)
-                    .userId(userId)
+                    .username(username)
                     .build();
         }
     }

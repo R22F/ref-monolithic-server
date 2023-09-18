@@ -1,13 +1,20 @@
 package com.example.refmonolithicserver.food.controller;
 
 import com.example.refmonolithicserver.food.service.FoodReadService;
+import com.example.refmonolithicserver.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
+@Slf4j
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -19,17 +26,20 @@ public class FoodReadController {
 
     @GetMapping
     @Operation(summary = "전체 음식 종류를 출력")
-    public ResponseEntity<?> retrieveAll(){
+    public ResponseEntity<?> retrieveAll(
+            Principal principal
+    ){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(foodService.getAll());
+                .body(foodService.getAll(principal.getName()));
     }
 
     @GetMapping("/recipes")
     @Operation(summary = "전체 레시피 정보 출력")
-    public ResponseEntity<?> retrieveRecipesAll() {
+    public ResponseEntity<?> retrieveRecipesAll(
+            Principal principal) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                foodService.getRecipesAll()
+                foodService.getRecipesAll(principal.getName())
         );
     }
 

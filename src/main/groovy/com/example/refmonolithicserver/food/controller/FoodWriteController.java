@@ -3,12 +3,16 @@ package com.example.refmonolithicserver.food.controller;
 import com.example.refmonolithicserver.common.ResponseMessage;
 import com.example.refmonolithicserver.food.dto.FoodDto.FoodRequestDto;
 import com.example.refmonolithicserver.food.service.FoodWriteService;
+import com.example.refmonolithicserver.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @CrossOrigin
 @RestController
@@ -23,22 +27,24 @@ public class FoodWriteController {
     @PostMapping
     @Operation(summary = "새로운 음식정보 생성")
     public ResponseEntity<?> CreateItem(
-            @RequestBody FoodRequestDto dto
+            @RequestBody FoodRequestDto dto,
+            Principal principal
     ){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(foodService.addItem(dto));
+                .body(foodService.addItem(dto, principal.getName()));
     }
 
     @PutMapping("/{foodId}")
     @Operation(summary = "Id에 해당하는 음식 정보 업데이트")
     public ResponseEntity<?> updateItem(
             @PathVariable("foodId") Long id,
-            @RequestBody FoodRequestDto dto
+            @RequestBody FoodRequestDto dto,
+            Principal principal
     ){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(foodService.modifyItem(id, dto));
+                .body(foodService.modifyItem(id, dto, principal.getName()));
     }
 
     @DeleteMapping("/{foodId}")

@@ -43,3 +43,11 @@ springdoc:
     groups-order: asc
     tags-sorter: alpha
     operations-sorter: method
+  show-login-endpoint: true
+
+app:
+  jwt:
+    ACCESS_SECRET: ${JWT_SECRET}
+    ACCESS_EXPIRATION_TIME: ${EXPIRED_TIME}
+    ACCESS_TOKEN_PREFIX: ${TOKEN_PREFIX}
+    HEADER_STRING: ${HEADER_STRING}

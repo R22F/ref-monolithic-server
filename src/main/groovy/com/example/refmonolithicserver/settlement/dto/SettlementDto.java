@@ -57,14 +57,14 @@ public record SettlementDto() {
         private Integer fixedPrice;
         private Integer count;
 
-        public SalesHistory toEntity(Long userId){
+        public SalesHistory toEntity(String username){
             return SalesHistory.builder()
                     .count(this.count)
                     .fixedPrice(this.fixedPrice)
                     .foodId(this.foodId)
                     .foodName(this.name)
                     .salesDate(LocalDate.now())
-                    .userId(1L)
+                    .username(username)
                     .build();
         }
     }
@@ -80,7 +80,7 @@ public record SettlementDto() {
         private String foodName;
         private LocalDate salesDate;
 
-        public SalesHistory toEntity(Long userId){
+        public SalesHistory toEntity(String username){
             return SalesHistory.builder()
                     .id(this.id)
                     .count(this.count)
@@ -88,7 +88,7 @@ public record SettlementDto() {
                     .foodId(this.foodId)
                     .foodName(this.foodName)
                     .salesDate(this.salesDate)
-                    .userId(userId)
+                    .username(username)
                     .build();
         }
     }

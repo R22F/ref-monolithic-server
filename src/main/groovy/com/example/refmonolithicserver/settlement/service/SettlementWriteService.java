@@ -29,12 +29,12 @@ public class SettlementWriteService {
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
 
-    public LocalDate set(SettlementRequestDto dto) {
+    public LocalDate set(SettlementRequestDto dto, String username) {
 
         LocalDate today = LocalDate.now();
 
         for (FoodInfo info: dto.getFoods()){
-            salesHistoryRepository.save(info.toEntity(1L));
+            salesHistoryRepository.save(info.toEntity(username));
 
             // ingredient 정보도 수정 되어야 함
 
@@ -59,9 +59,9 @@ public class SettlementWriteService {
         return today;
     }
 
-    public SalesHistory update(SalesRequestDto dto) {
+    public SalesHistory update(SalesRequestDto dto, String username) {
 
-        salesHistoryRepository.save(dto.toEntity(1L));
+        salesHistoryRepository.save(dto.toEntity(username));
 
         List<Recipe> recipes = recipeRepository.findByFoodId(dto.getFoodId());
         for (Recipe recipe:recipes){
@@ -71,7 +71,7 @@ public class SettlementWriteService {
             int fixedQuantity = ingredient.getRemainQuantity() - recipe.getQuantity();
             ingredientRepository.save(ingredient.modifyQuantity(fixedQuantity));
         }
-        return dto.toEntity(1L);
+        return dto.toEntity(username);
     }
 
     public Long remove(Long salesId) {

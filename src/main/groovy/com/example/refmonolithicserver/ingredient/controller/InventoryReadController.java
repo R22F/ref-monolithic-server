@@ -1,12 +1,16 @@
 package com.example.refmonolithicserver.ingredient.controller;
 
 import com.example.refmonolithicserver.ingredient.service.InventoryReadService;
+import com.example.refmonolithicserver.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @CrossOrigin
 @RestController
@@ -19,10 +23,11 @@ public class InventoryReadController {
 
     @GetMapping("/")
     @Operation(summary = "모든 재고 정보 출력")
-    public ResponseEntity<?> retrieveAll(){
+    public ResponseEntity<?> retrieveAll(
+            Principal principal){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(inventoryService.getAll());
+                .body(inventoryService.getAll(principal.getName()));
     }
 
     @GetMapping("/{ingredientId}")
