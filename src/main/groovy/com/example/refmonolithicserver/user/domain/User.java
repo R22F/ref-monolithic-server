@@ -19,17 +19,27 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "user",
         indexes = {
-                @Index(name = "idx_nickname", columnList = "nickname"),
+                @Index(name = "idx_username", columnList = "username"),
                 @Index(name = "idx_email", columnList = "email"),
         })
 public class User{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") private Long id;
-    @Column(name = "nickname", length = 128) private String nickname;
-    @Column(length = 256) @JsonIgnore private String password;
-    @Column private LocalDate birth;
-    @Column(name = "email", length = 128) private String email;
-    @Column @JsonIgnore private String roles;
+    @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username", length = 128)
+    private String username;
+
+    @Column(name = "password", length = 256) @JsonIgnore
+    private String password;
+
+    @Column(name = "birth")
+    private LocalDate birth;
+
+    @Column(name = "email", length = 128)
+    private String email;
+
+    @Column(name = "roles", length = 64) @JsonIgnore
+    private String roles;
 
     public List<String> getRoleList(){
         if(this.roles.length() > 0){

@@ -18,9 +18,9 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByNickname(username);
+        Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty())
-            return userRepository.findByNickname(username).map(this::createUserDetails).orElseThrow(() -> {
+            return userRepository.findByUsername(username).map(this::createUserDetails).orElseThrow(() -> {
                 throw new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다.");
             });
 
@@ -30,7 +30,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     private UserDetails createUserDetails(User userAccount) {
         try {
             return org.springframework.security.core.userdetails.User.builder()
-                    .username(userAccount.getNickname())
+                    .username(userAccount.getUsername())
                     .password(userAccount.getPassword())
                     .authorities(String.valueOf(userAccount.getRoles()))
                     .build();

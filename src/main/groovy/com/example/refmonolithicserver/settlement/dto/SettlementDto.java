@@ -80,7 +80,7 @@ public record SettlementDto() {
         private String foodName;
         private LocalDate salesDate;
 
-        public SalesHistory toEntity(String  username){
+        public SalesHistory toEntity(String username){
             return SalesHistory.builder()
                     .id(this.id)
                     .count(this.count)

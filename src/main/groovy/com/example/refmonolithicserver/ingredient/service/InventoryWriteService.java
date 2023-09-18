@@ -19,7 +19,7 @@ public class InventoryWriteService {
     }
 
     public Object modifyItem(Long id, IngredientRequestDto dto, String username){
-        return dto.toEntity(id, username);
+        return ingredientRepository.save(dto.toEntity(id, username));
     }
 
     public Long removeItem(Long id) {

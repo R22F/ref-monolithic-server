@@ -7,6 +7,7 @@ import com.example.refmonolithicserver.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -49,10 +50,11 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/signin").permitAll()
-                .requestMatchers("/signup").permitAll()
+                .requestMatchers(HttpMethod.POST, "/signin").permitAll()
+                .requestMatchers(HttpMethod.POST, "/signup").permitAll()
+                .requestMatchers(HttpMethod.GET, "/check/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
-                .anyRequest().hasRole("USER");
+                .anyRequest().authenticated();
 
         return http.build();
     }

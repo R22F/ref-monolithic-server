@@ -11,7 +11,7 @@ public record UserDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static final class UserSignUpRequestDto{
-        private String userId;
+        private String username;
         private String password;
         private String name;
         private LocalDate birth;
@@ -30,9 +30,23 @@ public record UserDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static final class UserInfoResponseDto{
-        private String userId;
+        private String username;
         private String name;
         private LocalDate birth;
+        private String email;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static final class UsernameDto{
+        private String username;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static final class UserEmailDto{
         private String email;
     }
 }

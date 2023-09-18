@@ -47,7 +47,7 @@ public class FoodReadService {
             Ingredient ingredient = ingredientRepository
                     .findById(recipe.getIngredientId())
                     .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND));
-            responses.add(new RecipeResponseDto().toDto(ingredient, recipe.getId()));
+            responses.add(new RecipeResponseDto().toDto(ingredient, recipe));
             primePrice += recipe.getQuantity() * ingredient.getPrimePrice();
         }
         // 원가 = food -> recipe -> recipe.quantity * ingredient.primePrice

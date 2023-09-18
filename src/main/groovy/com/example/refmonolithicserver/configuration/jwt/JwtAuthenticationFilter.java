@@ -7,6 +7,7 @@ import com.example.refmonolithicserver.configuration.principalDetaills.Principal
 import com.example.refmonolithicserver.user.dto.UserDto.UserSignInRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,12 +54,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 
-        String jwtToken = JWT.create()
+        String accessToken = JWT.create()
                 .withSubject(principalDetails.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + jwt.getEXPIRATION_TIME()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + jwt.getACCESS_EXPIRATION_TIME()))
                 .withClaim("id", principalDetails.getUser().getId().toString())
-                .withClaim("username", principalDetails.getUser().getNickname())
-                .sign(Algorithm.HMAC512(jwt.getSECRET()));
-        response.addHeader(jwt.getTOKEN_PREFIX(), jwt.getHEADER_STRING() +" "+ jwtToken);
+                .withClaim("username", principalDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC512(jwt.getACCESS_SECRET()));
+
+        response.addHeader(jwt.getACCESS_TOKEN_PREFIX(), jwt.getHEADER_STRING() + " " + accessToken);
     }
 }

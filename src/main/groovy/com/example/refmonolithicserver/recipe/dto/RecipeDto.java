@@ -54,10 +54,10 @@ public record RecipeDto() {
                     .units(ingredient.getUnits())
                     .build();
         }
-        public RecipeResponseDto toDto(Ingredient ingredient, Long recipeId){
+        public RecipeResponseDto toDto(Ingredient ingredient, Recipe recipe){
             return RecipeResponseDto.builder()
-                    .id(recipeId)
-                    .quantity(this.quantity)
+                    .id(recipe.getId())
+                    .quantity(recipe.getQuantity())
                     .ingredientName(ingredient.getName())
                     .units(ingredient.getUnits())
                     .build();

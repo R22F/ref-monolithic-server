@@ -20,18 +20,38 @@ import java.time.LocalDate;
                 @Index(name = "idx_user", columnList = "username"),
         })
 public class Ingredient{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") private Long id;
-    @Column private String name;
-    @Column private Integer remainQuantity;
-    @Column private LocalDate buyDate;
-    @Column private LocalDate expiredDate;
-    @Column private Integer alertQuantity;
-    @Column private Double primePrice;
-    @Column private String units;
-    @Column private Integer relievedQuantity;
-    @Column private String url;
-    @Column(name = "username") private String username;
+    @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name", length = 128)
+    private String name;
+
+    @Column(name = "remain_quantity")
+    private Integer remainQuantity;
+
+    @Column(name = "buy_date")
+    private LocalDate buyDate;
+
+    @Column(name = "expired_date")
+    private LocalDate expiredDate;
+
+    @Column(name = "alert_quantity")
+    private Integer alertQuantity;
+
+    @Column(name = "prime_price")
+    private Double primePrice;
+
+    @Column(name = "units", length = 32)
+    private String units;
+
+    @Column(name = "relieved_quantity")
+    private Integer relievedQuantity;
+
+    @Column(name = "url", length = 512)
+    private String url;
+
+    @Column(name = "username", length = 128)
+    private String username;
 
     public Ingredient modifyQuantity(int fixedQuantity){
         this.remainQuantity = fixedQuantity;

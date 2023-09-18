@@ -10,9 +10,9 @@ public record AppProperties() {
     @Component
     @ConfigurationProperties(prefix = "app.jwt")
     public static class Jwt {
-        private String SECRET;
-        private int EXPIRATION_TIME;
-        private String TOKEN_PREFIX;
+        private String ACCESS_SECRET;
+        private int ACCESS_EXPIRATION_TIME;
+        private String ACCESS_TOKEN_PREFIX;
         private String HEADER_STRING;
     }
 }

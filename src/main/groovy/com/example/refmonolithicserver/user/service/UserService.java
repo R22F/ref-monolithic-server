@@ -4,6 +4,9 @@ import com.example.refmonolithicserver.common.exception.BusinessException;
 import com.example.refmonolithicserver.common.exception.ErrorCode;
 import com.example.refmonolithicserver.user.dao.UserRepository;
 import com.example.refmonolithicserver.user.domain.User;
+import com.example.refmonolithicserver.user.dto.UserDto;
+import com.example.refmonolithicserver.user.dto.UserDto.UserEmailDto;
+import com.example.refmonolithicserver.user.dto.UserDto.UsernameDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +25,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     public Object signup(UserSignUpRequestDto user) {
-        if (userRepository.findByNickname(user.getUserId()).isPresent())
+        if (userRepository.findByUsername(user.getUsername()).isPresent())
             throw new BusinessException(ErrorCode.DUPLICATE, USER_ID_DUPLICATED);
         if (userRepository.findByEmail(user.getEmail()).isPresent())
             throw new BusinessException(ErrorCode.DUPLICATE, USER_EMAIL_DUPLICATED);
@@ -30,7 +33,7 @@ public class UserService {
         String rawPassword = user.getPassword();
 
         User userAccount = User.builder()
-                .nickname(user.getUserId())
+                .username(user.getUsername())
                 .birth(user.getBirth())
                 .email(user.getEmail())
                 .password(encoder.encode(rawPassword))
@@ -39,7 +42,15 @@ public class UserService {
         return userRepository.save(userAccount);
     }
 
-    public Object getUserInfo(){
-        return userRepository.findAll();
+    public Object getUserInfo(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public boolean checkUser(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean checkEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

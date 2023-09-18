@@ -16,10 +16,18 @@ import lombok.*;
                 @Index(name = "idx_ingredient_id", columnList = "ingredient_id"),
         })
 public class Recipe {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") private Long id;
-    @Column Integer quantity;
-    @Column(name = "food_id") private Long foodId;
-    @Column(name = "ingredient_id") private Long ingredientId;
-    @Transient @Setter private String ingredientName;
+    @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "food_id")
+    private Long foodId;
+
+    @Column(name = "ingredient_id")
+    private Long ingredientId;
+
+    @Transient @Setter
+    private String ingredientName;
 }
