@@ -24,7 +24,7 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
      * @return All foods of user
      */
     @Query("select food from Food food where food.username = :username")
-    List<Food> findAllByUserId(@Param("username") String username);
+    List<Food> findAllByUsername(@Param("username") String username);
 
     /**
      *
