@@ -43,9 +43,17 @@ jobs:
                 - name: PASSWORD
                   value: refmariadb!@#
                 - name: DDL_AUTO
-                  value: create-drop
+                  value: update
                 - name: DATABASE-PLATFORM
                   value: org.hibernate.dialect.MariaDBDialect
+                - name: JWT_SECRET
+                  value: 65536refref!@#
+                - name: EXPIRED_TIME
+                  value: "3600000"
+                - name: TOKEN_PREFIX
+                  value: Authorization
+                - name: HEADER_STRING
+                  value: Bearer
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
