@@ -13,11 +13,12 @@ public record IngredientDto() {
     @NoArgsConstructor
     public static class IngredientRequestDto {
         private String name;
-        private Integer buyQuantity;
+        private Integer unitQuantity;
         private Integer remainQuantity;
         private LocalDate buyDate;
         private Integer expiredPeriod;
         private Integer alertQuantity;
+        private Integer unitPrice;
         private Double primePrice;
         private String units;
         private Integer relievedQuantity;
@@ -27,10 +28,12 @@ public record IngredientDto() {
             return Ingredient.builder()
                     .name(this.name)
                     .remainQuantity(this.remainQuantity)
+                    .unitQuantity(this.unitQuantity)
                     .buyDate(this.buyDate)
                     .expiredDate(this.buyDate.plusDays(this.expiredPeriod))
                     .alertQuantity(this.alertQuantity)
                     .primePrice(this.primePrice)
+                    .unitPrice(this.unitPrice)
                     .units(this.units)
                     .relievedQuantity(this.relievedQuantity)
                     .url(this.url)
@@ -43,10 +46,12 @@ public record IngredientDto() {
                     .id(id)
                     .name(this.name)
                     .remainQuantity(this.remainQuantity)
+                    .unitQuantity(this.unitQuantity)
                     .buyDate(this.buyDate)
                     .expiredDate(this.buyDate.plusDays(this.expiredPeriod))
                     .alertQuantity(this.alertQuantity)
                     .primePrice(this.primePrice)
+                    .unitPrice(this.unitPrice)
                     .units(this.units)
                     .relievedQuantity(this.relievedQuantity)
                     .url(this.url)

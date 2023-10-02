@@ -29,6 +29,9 @@ public class Ingredient{
     @Column(name = "remain_quantity")
     private Integer remainQuantity;
 
+    @Column(name = "unit_quantity")
+    private Integer unitQuantity;
+
     @Column(name = "buy_date")
     private LocalDate buyDate;
 
@@ -40,6 +43,9 @@ public class Ingredient{
 
     @Column(name = "prime_price")
     private Double primePrice;
+
+    @Column(name = "unit_price")
+    private Integer unitPrice;
 
     @Column(name = "units", length = 32)
     private String units;
