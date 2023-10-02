@@ -30,6 +30,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
      *
      * @param id must not be {@literal null}.
      */
-    @Query("delete from Food where id = :id")
-    void deleteById(@Param("id") Long id);
+//    @Query("delete from Ingredient where id = :id")
+    void deleteById(Long id);
 }
