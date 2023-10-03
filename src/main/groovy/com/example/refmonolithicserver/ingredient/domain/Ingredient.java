@@ -38,6 +38,9 @@ public class Ingredient{
     @Column(name = "expired_date")
     private LocalDate expiredDate;
 
+    @Column(name = "expired_period")
+    private Integer expiredPeriod;
+
     @Column(name = "alert_quantity")
     private Integer alertQuantity;
 
