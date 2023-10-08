@@ -3,6 +3,8 @@ package com.example.refmonolithicserver.user.controller;
 import com.example.refmonolithicserver.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ public class UserController {
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
     public ResponseEntity<?> signup(
-            @RequestBody UserSignUpRequestDto user
+            @Valid @RequestBody UserSignUpRequestDto user
     ){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -53,7 +55,7 @@ public class UserController {
     @GetMapping("/check/email/{email}")
     @Operation(summary = "이메일 중복 체크")
     public ResponseEntity<?> emailDuplicateCheck(
-            @PathVariable("email") String email
+            @Email @PathVariable("email") String email
             ){
         return ResponseEntity
                 .status(HttpStatus.OK)
