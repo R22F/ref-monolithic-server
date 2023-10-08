@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.example.refmonolithicserver.common.component.AppProperties.Jwt;
+import com.example.refmonolithicserver.common.exception.BusinessException;
 import com.example.refmonolithicserver.configuration.principalDetaills.PrincipalDetails;
 import com.example.refmonolithicserver.user.dao.UserRepository;
 import com.example.refmonolithicserver.user.domain.User;
@@ -75,6 +76,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
         }catch (UsernameNotFoundException e){
             log.error("UsernameNotFoundException");
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }catch (Exception e){
+            throw new BusinessException(e.getMessage());
         }
         chain.doFilter(request, response);
     }

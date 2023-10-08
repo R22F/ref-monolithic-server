@@ -1,6 +1,8 @@
 package com.example.refmonolithicserver.ingredient.dto;
 
 import com.example.refmonolithicserver.ingredient.domain.Ingredient;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,17 +14,17 @@ public record IngredientDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class IngredientRequestDto {
-        private String name;
-        private Integer unitQuantity;
-        private Integer remainQuantity;
-        private LocalDate buyDate;
-        private Integer expiredPeriod;
-        private Integer alertQuantity;
-        private Integer unitPrice;
-        private Double primePrice;
-        private String units;
-        private Integer relievedQuantity;
-        private String url;
+        @NotBlank(message = "name : not null") private String name;
+        @NotNull(message = "unitQuantity : not null") private Integer unitQuantity;
+        @NotNull(message = "remainQuantity : not null") private Integer remainQuantity;
+        @NotNull(message = "buyDate : not null") private LocalDate buyDate;
+        @NotNull(message = "expiredPeriod : not null") private Integer expiredPeriod;
+        @NotNull(message = "alertQuantity : not null") private Integer alertQuantity;
+        @NotNull(message = "unitPrice : not null") private Integer unitPrice;
+        @NotNull(message = "primePrice : not null") private Double primePrice;
+        @NotBlank(message = "units : not null") private String units;
+        @NotNull(message = "relievedQuantity : not null") private Integer relievedQuantity;
+        @NotNull(message = "url : not null") private String url;
 
         public Ingredient toEntity(String username){
             return Ingredient.builder()

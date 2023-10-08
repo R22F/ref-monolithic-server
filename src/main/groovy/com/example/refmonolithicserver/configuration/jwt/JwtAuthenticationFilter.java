@@ -7,7 +7,6 @@ import com.example.refmonolithicserver.configuration.principalDetaills.Principal
 import com.example.refmonolithicserver.user.dto.UserDto.UserSignInRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;

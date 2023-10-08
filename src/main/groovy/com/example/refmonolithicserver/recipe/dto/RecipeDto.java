@@ -2,6 +2,8 @@ package com.example.refmonolithicserver.recipe.dto;
 
 import com.example.refmonolithicserver.ingredient.domain.Ingredient;
 import com.example.refmonolithicserver.recipe.domain.Recipe;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +15,9 @@ public record RecipeDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class RecipeRequestDto{
-        private Integer quantity;
-        private Long foodId;
-        private Long ingredientId;
+        @NotNull(message = "quantity : not null") private Integer quantity;
+        @NotNull(message = "foodId : not null") private Long foodId;
+        @NotNull(message = "ingredientId : not null") private Long ingredientId;
 
         public Recipe toEntity(String ingredientName){
             return Recipe.builder()
@@ -41,10 +43,10 @@ public record RecipeDto() {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RecipeResponseDto {
-        private Long id;
-        private Integer quantity;
-        private String ingredientName;
-        private String units;
+        @NotNull(message = "id : not null") private Long id;
+        @NotNull(message = "quantity : not null") private Integer quantity;
+        @NotBlank(message = "ingredientName : not null") private String ingredientName;
+        @NotBlank(message = "units : not null") private String units;
 
         public RecipeResponseDto toDto(Ingredient ingredient){
             return RecipeResponseDto.builder()

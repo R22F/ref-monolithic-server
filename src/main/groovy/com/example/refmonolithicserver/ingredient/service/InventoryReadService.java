@@ -1,7 +1,6 @@
 package com.example.refmonolithicserver.ingredient.service;
 
 import com.example.refmonolithicserver.ingredient.dao.IngredientRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

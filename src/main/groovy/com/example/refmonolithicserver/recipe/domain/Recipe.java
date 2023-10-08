@@ -1,7 +1,5 @@
 package com.example.refmonolithicserver.recipe.domain;
 
-import com.example.refmonolithicserver.ingredient.domain.Ingredient;
-import com.example.refmonolithicserver.recipe.dto.RecipeDto.RecipeResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
 

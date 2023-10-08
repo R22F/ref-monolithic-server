@@ -11,6 +11,11 @@ public class BusinessException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    public BusinessException(String msg) {
+        this.errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
+        this.message = msg;
+    }
+
     public BusinessException(ErrorCode errorCode, ExceptionMessage exceptionMessage) {
         this.errorCode = errorCode;
         this.message = exceptionMessage.getMessage();
