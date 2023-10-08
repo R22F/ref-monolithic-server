@@ -1,13 +1,11 @@
 package com.example.refmonolithicserver.ingredient.controller;
 
 import com.example.refmonolithicserver.ingredient.service.InventoryReadService;
-import com.example.refmonolithicserver.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

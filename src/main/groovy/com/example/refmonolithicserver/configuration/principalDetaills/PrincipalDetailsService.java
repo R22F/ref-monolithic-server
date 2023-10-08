@@ -1,7 +1,7 @@
 package com.example.refmonolithicserver.configuration.principalDetaills;
 
-import com.example.refmonolithicserver.user.domain.User;
 import com.example.refmonolithicserver.user.dao.UserRepository;
+import com.example.refmonolithicserver.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
