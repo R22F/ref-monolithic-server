@@ -1,5 +1,7 @@
 package com.example.refmonolithicserver.user.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,19 +13,19 @@ public record UserDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static final class UserSignUpRequestDto{
-        private String username;
-        private String password;
-        private String name;
-        private LocalDate birth;
-        private String email;
+        @NotBlank(message = "username : not null") private String username;
+        @NotBlank(message = "password : not null") private String password;
+        @NotBlank(message = "name : not null") private String name;
+        @NotNull(message = "birth : not null") private LocalDate birth;
+        @NotBlank(message = "email : not null") private String email;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static final class UserSignInRequestDto{
-        private String username;
-        private String password;
+        @NotBlank private String username;
+        @NotBlank private String password;
     }
 
     @Data

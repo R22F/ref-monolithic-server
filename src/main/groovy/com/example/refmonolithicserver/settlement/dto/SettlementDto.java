@@ -1,6 +1,8 @@
 package com.example.refmonolithicserver.settlement.dto;
 
 import com.example.refmonolithicserver.settlement.domain.SalesHistory;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,10 +54,10 @@ public record SettlementDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FoodInfo{
-        private Long foodId;
-        private String name;
-        private Integer fixedPrice;
-        private Integer count;
+        @NotNull(message = "foodId : not null") private Long foodId;
+        @NotBlank(message = "name : not null") private String name;
+        @NotNull(message = "fixedPrice : not null") private Integer fixedPrice;
+        @NotNull(message = "count : not null") private Integer count;
 
         public SalesHistory toEntity(String username){
             return SalesHistory.builder()
@@ -73,12 +75,12 @@ public record SettlementDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class SalesRequestDto{
-        private Long id;
-        private Integer count;
-        private Integer fixedPrice;
-        private Long foodId;
-        private String foodName;
-        private LocalDate salesDate;
+        @NotNull(message = "id : not null") private Long id;
+        @NotNull(message = "count : not null") private Integer count;
+        @NotNull(message = "fixedPrice : not null") private Integer fixedPrice;
+        @NotNull(message = "foodId : not null") private Long foodId;
+        @NotBlank(message = "foodName : not null") private String foodName;
+        @NotNull(message = "salesDate : not null") private LocalDate salesDate;
 
         public SalesHistory toEntity(String username){
             return SalesHistory.builder()
