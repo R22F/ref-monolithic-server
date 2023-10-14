@@ -1,6 +1,5 @@
 package com.example.refmonolithicserver.food.controller;
 
-import com.example.refmonolithicserver.common.ResponseMessage;
 import com.example.refmonolithicserver.food.dto.FoodDto.FoodRequestDto;
 import com.example.refmonolithicserver.food.service.FoodWriteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +19,6 @@ import java.security.Principal;
 public class FoodWriteController {
 
     private final FoodWriteService foodService;
-    private final ResponseMessage responseMessage;
 
     @PostMapping
     @Operation(summary = "새로운 음식정보 생성")
@@ -45,17 +43,15 @@ public class FoodWriteController {
                 .body(foodService.modifyItem(id, dto, principal.getName()));
     }
 
-    @DeleteMapping("/{foodId}")
-    @Operation(summary = "Id에 해당하는 음식 삭제")
-    public ResponseEntity<?> deleteItem(
-            @PathVariable("foodId") Long id
-    ){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(responseMessage.removeMessage(
-                        foodService.removeItem(id))
-                );
-    }
+//    @DeleteMapping("/{foodId}")
+//    @Operation(summary = "Id에 해당하는 음식 삭제")
+//    public ResponseEntity<?> deleteItem(
+//            @PathVariable("foodId") Long id
+//    ){
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(foodService.removeItem(id));
+//    }
 
     @DeleteMapping("/{foodId}/recipes")
     @Operation(summary = "FoodId에 해당하는 레시피 삭제(전체)")
@@ -64,8 +60,6 @@ public class FoodWriteController {
     ){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(responseMessage.removeMessage(
-                        foodService.removeRecipeByFood(foodId))
-                );
+                .body(foodService.removeRecipeByFood(foodId));
     }
 }

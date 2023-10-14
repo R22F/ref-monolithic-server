@@ -31,4 +31,17 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
      * @param foodId Want to delete
      */
     void deleteByFoodId(Long foodId);
+
+    /**
+     *
+     * @param ingredientId Want to delete
+     */
+    void deleteByIngredientId(Long ingredientId);
+
+    /**
+     *
+     * @param ingredientId Want to check
+     * @return true / false
+     */
+    Boolean existsByIngredientId(Long ingredientId);
 }

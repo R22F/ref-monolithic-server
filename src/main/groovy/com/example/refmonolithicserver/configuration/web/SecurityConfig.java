@@ -1,6 +1,8 @@
 package com.example.refmonolithicserver.configuration.web;
 
 import com.example.refmonolithicserver.common.component.AppProperties.Jwt;
+import com.example.refmonolithicserver.configuration.jwt.JwtAccessDeniedHandler;
+import com.example.refmonolithicserver.configuration.jwt.JwtAuthenticationEntryPoint;
 import com.example.refmonolithicserver.configuration.jwt.JwtAuthenticationFilter;
 import com.example.refmonolithicserver.configuration.jwt.JwtAuthorizationFilter;
 import com.example.refmonolithicserver.user.dao.UserRepository;

@@ -1,6 +1,5 @@
 package com.example.refmonolithicserver.ingredient.controller;
 
-import com.example.refmonolithicserver.common.ResponseMessage;
 import com.example.refmonolithicserver.ingredient.dto.IngredientDto.IngredientRequestDto;
 import com.example.refmonolithicserver.ingredient.service.InventoryWriteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +20,6 @@ import java.security.Principal;
 public class InventoryWriteController {
 
     private final InventoryWriteService inventoryService;
-    private final ResponseMessage responseMessage;
 
     @PostMapping("/")
     @Operation(summary = "새로운 재고정보 생성")
@@ -49,8 +47,6 @@ public class InventoryWriteController {
     public ResponseEntity<?> deleteInventoryItem(@PathVariable("ingredientId") Long id){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(
-                        responseMessage.removeMessage(inventoryService.removeItem(id))
-                );
+                .body(inventoryService.removeItem(id));
     }
 }

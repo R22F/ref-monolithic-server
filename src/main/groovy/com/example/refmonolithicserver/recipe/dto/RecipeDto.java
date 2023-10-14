@@ -43,16 +43,18 @@ public record RecipeDto() {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RecipeResponseDto {
-        @NotNull(message = "id : not null") private Long id;
-        @NotNull(message = "quantity : not null") private Integer quantity;
-        @NotBlank(message = "ingredientName : not null") private String ingredientName;
-        @NotBlank(message = "units : not null") private String units;
+        private Long id;
+        private Integer quantity;
+        private String ingredientName;
+        private Long ingredientId;
+        private String units;
 
         public RecipeResponseDto toDto(Ingredient ingredient){
             return RecipeResponseDto.builder()
                     .id(this.id)
                     .quantity(this.quantity)
                     .ingredientName(ingredient.getName())
+                    .ingredientId(ingredient.getId())
                     .units(ingredient.getUnits())
                     .build();
         }
@@ -61,6 +63,7 @@ public record RecipeDto() {
                     .id(recipe.getId())
                     .quantity(recipe.getQuantity())
                     .ingredientName(ingredient.getName())
+                    .ingredientId(ingredient.getId())
                     .units(ingredient.getUnits())
                     .build();
         }
