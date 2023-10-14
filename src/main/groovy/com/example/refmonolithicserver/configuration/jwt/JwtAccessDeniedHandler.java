@@ -1,4 +1,4 @@
-package com.example.refmonolithicserver.configuration.web;
+package com.example.refmonolithicserver.configuration.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
