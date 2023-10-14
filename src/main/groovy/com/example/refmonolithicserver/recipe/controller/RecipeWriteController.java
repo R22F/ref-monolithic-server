@@ -1,6 +1,5 @@
 package com.example.refmonolithicserver.recipe.controller;
 
-import com.example.refmonolithicserver.common.ResponseMessage;
 import com.example.refmonolithicserver.recipe.dto.RecipeDto.RecipeRequestDto;
 import com.example.refmonolithicserver.recipe.service.RecipeWriteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +20,6 @@ import java.util.List;
 public class RecipeWriteController {
 
     private final RecipeWriteService recipeService;
-    private final ResponseMessage responseMessage;
 
     @PostMapping
     @Operation(summary = "새로운 레시피 정보 생성(리스트)")
@@ -52,8 +50,16 @@ public class RecipeWriteController {
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(responseMessage.removeMessage(
-                        recipeService.removeRecipe(recipeId))
-                );
+                .body(recipeService.removeRecipe(recipeId));
+    }
+
+    @DeleteMapping("/ingredientId/{ingredientId}")
+    @Operation(summary = "Id에 해당하는 레시피 삭제(단건)")
+    public ResponseEntity<?> deleteRecipeByIngredientId(
+            @PathVariable(value = "ingredientId") Long ingredientId
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(recipeService.removeRecipeByIngredientId(ingredientId));
     }
 }

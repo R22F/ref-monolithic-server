@@ -26,4 +26,14 @@ public class RecipeReadController {
                 recipeService.getRecipeById(recipeId)
         );
     }
+
+    @GetMapping("/ingredient/{ingredientId}")
+    @Operation(summary = "해당 ingredient 정보를 가지고 있는 레시피 존재 여부 확인")
+    public ResponseEntity<?> retrieveIngredientExist(
+            @PathVariable(value = "ingredientId") Long ingredientId
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                recipeService.checkIngredient(ingredientId)
+        );
+    }
 }

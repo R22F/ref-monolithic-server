@@ -28,4 +28,8 @@ public class RecipeReadService {
         recipe.setIngredientName(ingredientName);
         return recipe;
     }
+
+    public Object checkIngredient(Long ingredientId) {
+        return recipeRepository.existsByIngredientId(ingredientId);
+    }
 }

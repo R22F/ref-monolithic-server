@@ -52,4 +52,9 @@ public class RecipeWriteService {
         recipeRepository.deleteById(id);
         return id;
     }
+
+    public Object removeRecipeByIngredientId(Long ingredientId) {
+        recipeRepository.existsByIngredientId(ingredientId);
+        return ingredientId;
+    }
 }
