@@ -21,7 +21,6 @@ spring:
 
   jpa:
     open-in-view: true
-    show-sql: true
     hibernate:
       ddl-auto: ${DDL_AUTO}
     database-platform: org.hibernate.dialect.MariaDB103Dialect
