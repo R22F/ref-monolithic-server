@@ -24,7 +24,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 import java.util.Optional;
 
-@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 
     private final UserRepository userRepository;
@@ -65,16 +64,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
                                 null,
                                 principalDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                log.info("Access user : {}", SecurityContextHolder.getContext().getAuthentication().getName());
             }
         }catch (TokenExpiredException e){
-            log.error("TokenExpiredException");
+//            log.error("TokenExpiredException");
             response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         }catch (SignatureVerificationException e){
-            log.error("SignatureVerificationException");
+//            log.error("SignatureVerificationException");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }catch (UsernameNotFoundException e){
-            log.error("UsernameNotFoundException");
+//            log.error("UsernameNotFoundException");
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }catch (Exception e){
             throw new BusinessException(e.getMessage());
