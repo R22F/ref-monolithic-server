@@ -52,11 +52,16 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/food/**").authenticated()
+                .requestMatchers("/inventory/**").authenticated()
+                .requestMatchers("/recipe/**").authenticated()
+                .requestMatchers("/settlement/**").authenticated()
+                .requestMatchers("/user/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "/signin").permitAll()
                 .requestMatchers(HttpMethod.POST, "/signup").permitAll()
                 .requestMatchers(HttpMethod.GET, "/check/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 
         return http.build();
     }

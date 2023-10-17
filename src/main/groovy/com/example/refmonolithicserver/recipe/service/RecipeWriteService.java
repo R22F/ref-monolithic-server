@@ -2,6 +2,7 @@ package com.example.refmonolithicserver.recipe.service;
 
 import com.example.refmonolithicserver.common.exception.BusinessException;
 import com.example.refmonolithicserver.common.exception.ErrorCode;
+import com.example.refmonolithicserver.food.dao.FoodRepository;
 import com.example.refmonolithicserver.ingredient.dao.IngredientRepository;
 import com.example.refmonolithicserver.recipe.dao.RecipeRepository;
 import com.example.refmonolithicserver.recipe.domain.Recipe;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.refmonolithicserver.common.exception.ExceptionMessage.FOOD_NOT_FOUND;
 import static com.example.refmonolithicserver.common.exception.ExceptionMessage.INGREDIENT_NOT_FOUND;
 import static com.example.refmonolithicserver.recipe.dto.RecipeDto.RecipeRequestDto;
 
@@ -21,13 +23,16 @@ import static com.example.refmonolithicserver.recipe.dto.RecipeDto.RecipeRequest
 public class RecipeWriteService {
 
     private final RecipeRepository recipeRepository;
+    private final FoodRepository foodRepository;
     private final IngredientRepository ingredientRepository;
 
     public Object addRecipe(List<RecipeRequestDto> requestDtoList) {
 
-        // food, ingredient 검증 로직 추가 필요
         List<Recipe> savedRecipeList = new ArrayList<>();
         for(RecipeRequestDto dto:requestDtoList){
+            Long foodId = dto.getFoodId();
+            if (!foodRepository.existsById(foodId))
+                throw new BusinessException(ErrorCode.NOT_FOUND, FOOD_NOT_FOUND);
             String ingredientName = ingredientRepository
                     .findById(dto.getIngredientId())
                     .orElseThrow(()->new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND))
