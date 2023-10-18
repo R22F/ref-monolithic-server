@@ -5,10 +5,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.example.refmonolithicserver.common.component.AppProperties.Jwt;
-import com.example.refmonolithicserver.common.exception.BusinessException;
+import com.example.refmonolithicserver.common.exception.ErrorResponse;
 import com.example.refmonolithicserver.configuration.principalDetaills.PrincipalDetails;
 import com.example.refmonolithicserver.user.dao.UserRepository;
 import com.example.refmonolithicserver.user.domain.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,10 +25,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 import java.util.Optional;
 
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 
     private final UserRepository userRepository;
     private final Jwt jwt;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, Jwt jwt) {
         super(authenticationManager);
@@ -59,24 +62,31 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
                     throw new TokenExpiredException("");
                 PrincipalDetails principalDetails = new PrincipalDetails(user.get());
                 Authentication authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                principalDetails,
-                                null,
-                                principalDetails.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }catch (TokenExpiredException e){
-//            log.error("TokenExpiredException");
-            response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+            log.error("Token expired");
+            setResponse(response, e, HttpServletResponse.SC_EXPECTATION_FAILED, "JWT : Token expired");
+
         }catch (SignatureVerificationException e){
-//            log.error("SignatureVerificationException");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            log.error("Signature not valid");
+            setResponse(response, e, HttpServletResponse.SC_UNAUTHORIZED, "JWT : Signature not valid");
+
         }catch (UsernameNotFoundException e){
-//            log.error("UsernameNotFoundException");
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            log.error("User not found");
+            setResponse(response, e, HttpServletResponse.SC_FORBIDDEN, "JWT : User not found");
+
         }catch (Exception e){
-            throw new BusinessException(e.getMessage());
+            log.error("exception");
+            setResponse(response, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "JWT : Undefined exception");
         }
-        chain.doFilter(request, response);
+    }
+
+    private void setResponse(HttpServletResponse response, Exception exception, int status, String message) throws IOException {
+        response.setStatus(status);
+        response.setContentType("application/json");
+        response.getWriter().write(objectMapper.writeValueAsString(
+                new ErrorResponse(status, message, exception.getMessage())));
     }
 }
