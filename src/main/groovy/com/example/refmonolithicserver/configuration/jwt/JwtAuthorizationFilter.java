@@ -68,19 +68,24 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
         }catch (TokenExpiredException e){
             log.error("Token expired");
             setResponse(response, e, HttpServletResponse.SC_EXPECTATION_FAILED, "JWT : Token expired");
+            return;
 
         }catch (SignatureVerificationException e){
             log.error("Signature not valid");
             setResponse(response, e, HttpServletResponse.SC_UNAUTHORIZED, "JWT : Signature not valid");
+            return;
 
         }catch (UsernameNotFoundException e){
             log.error("User not found");
             setResponse(response, e, HttpServletResponse.SC_FORBIDDEN, "JWT : User not found");
+            return;
 
         }catch (Exception e){
             log.error("exception");
             setResponse(response, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "JWT : Undefined exception");
+            return;
         }
+        chain.doFilter(request, response);
     }
 
     private void setResponse(HttpServletResponse response, Exception exception, int status, String message) throws IOException {
