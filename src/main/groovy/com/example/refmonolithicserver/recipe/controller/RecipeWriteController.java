@@ -54,7 +54,7 @@ public class RecipeWriteController {
     }
 
     @DeleteMapping("/ingredientId/{ingredientId}")
-    @Operation(summary = "Id에 해당하는 레시피 삭제(단건)")
+    @Operation(summary = "IngredientId 해당하는 레시피 전체 삭제(다중건)")
     public ResponseEntity<?> deleteRecipeByIngredientId(
             @PathVariable(value = "ingredientId") Long ingredientId
     ) {
