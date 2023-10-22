@@ -15,7 +15,9 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
      * @param id must not be {@literal null}.
      * @return Retrieve all by food
      */
-    @Query("select recipe from Recipe recipe where recipe.foodId = :id")
+    @Query("select recipe " +
+            "from Recipe recipe " +
+            "where recipe.foodId = :id")
     List<Recipe> findByFoodId(@Param("id") Long id);
 
     /**
@@ -23,7 +25,9 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
      * @param id must not be {@literal null}.
      * @return Retrieve one
      */
-    @Query("select recipe from Recipe recipe where recipe.id = :id")
+    @Query("select recipe " +
+            "from Recipe recipe " +
+            "where recipe.id = :id")
     Optional<Recipe> findById(@Param("id") Long id);
 
     /**

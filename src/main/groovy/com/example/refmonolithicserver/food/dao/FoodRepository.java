@@ -15,7 +15,9 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
      * @param id must not be {@literal null}.
      * @return Retrieve one item
      */
-    @Query("select food from Food food where food.id = :id")
+    @Query("select food " +
+            "from Food food " +
+            "where food.id = :id")
     Optional<Food> findById(@Param("id") Long id);
 
     /**
@@ -23,7 +25,10 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
      * @param username User info in Security Context
      * @return All foods of user
      */
-    @Query("select food from Food food where food.username = :username")
+    @Query("select food " +
+            "from Food food " +
+            "where food.username = :username " +
+            "order by food.name")
     List<Food> findAllByUsername(@Param("username") String username);
 
     /**

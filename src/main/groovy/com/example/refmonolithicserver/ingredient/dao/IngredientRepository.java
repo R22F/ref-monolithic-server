@@ -15,7 +15,9 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
      * @param id must not be {@literal null}.
      * @return Retrieve One
      */
-    @Query("select ingredient from Ingredient ingredient where ingredient.id = :id")
+    @Query("select ingredient " +
+            "from Ingredient ingredient " +
+            "where ingredient.id = :id")
     Optional<Ingredient> findById(@Param("id") Long id);
 
     /**
@@ -23,7 +25,10 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
      * @param username User info in Security Context
      * @return All ingredients of user
      */
-    @Query("select ingredient from Ingredient ingredient where ingredient.username = :username")
+    @Query("select ingredient " +
+            "from Ingredient ingredient " +
+            "where ingredient.username = :username " +
+            "order by ingredient.name")
     List<Ingredient> findAllByUserId(@Param("username") String username);
 
     /**
