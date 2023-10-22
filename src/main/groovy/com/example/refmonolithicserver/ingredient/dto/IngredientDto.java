@@ -15,14 +15,14 @@ public record IngredientDto() {
     @NoArgsConstructor
     public static class IngredientRequestDto {
         @NotBlank(message = "name : not null") private String name;
-        @NotNull(message = "unitQuantity : not null") private Integer unitQuantity;
+        @NotNull(message = "unitQuantity : not null") private Integer unitQuantity; // 단위 수량
+        @NotNull(message = "unitPrice : not null") private Integer unitPrice; // 단위 수량당 가격
+        @NotBlank(message = "units : not null") private String units; // 단위
+        // 따라서 300g당 3000원이라 하면 -> unitQuantity(units) 는 unitPrice, unitPrice / unitQuantity = primePrice
         @NotNull(message = "remainQuantity : not null") private Integer remainQuantity;
         @NotNull(message = "buyDate : not null") private LocalDate buyDate;
         @NotNull(message = "expiredPeriod : not null") private Integer expiredPeriod;
         @NotNull(message = "alertQuantity : not null") private Integer alertQuantity;
-        @NotNull(message = "unitPrice : not null") private Integer unitPrice;
-        @NotNull(message = "primePrice : not null") private Double primePrice;
-        @NotBlank(message = "units : not null") private String units;
         @NotNull(message = "relievedQuantity : not null") private Integer relievedQuantity;
         @NotNull(message = "url : not null") private String url;
 
@@ -35,7 +35,7 @@ public record IngredientDto() {
                     .expiredDate(this.buyDate.plusDays(this.expiredPeriod))
                     .expiredPeriod(this.expiredPeriod)
                     .alertQuantity(this.alertQuantity)
-                    .primePrice(this.primePrice)
+                    .primePrice((double) (this.unitPrice/this.unitQuantity))
                     .unitPrice(this.unitPrice)
                     .units(this.units)
                     .relievedQuantity(this.relievedQuantity)
@@ -54,7 +54,7 @@ public record IngredientDto() {
                     .expiredDate(this.buyDate.plusDays(this.expiredPeriod))
                     .expiredPeriod(this.expiredPeriod)
                     .alertQuantity(this.alertQuantity)
-                    .primePrice(this.primePrice)
+                    .primePrice((double) (this.unitPrice/this.unitQuantity))
                     .unitPrice(this.unitPrice)
                     .units(this.units)
                     .relievedQuantity(this.relievedQuantity)
