@@ -18,7 +18,8 @@ import java.time.LocalDate;
             @Index(name = "idx_sales_date", columnList = "sales_date"),
             @Index(name = "idx_food_id", columnList = "food_id"),
             @Index(name = "idx_user", columnList = "username")
-        })
+        },
+        uniqueConstraints = { @UniqueConstraint(name = "UniqueFoodAndDate", columnNames = { "sales_date", "food_name" }) })
 public class SalesHistory{
     @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -18,7 +18,8 @@ import java.time.LocalDate;
 @Table(name = "ingredient",
         indexes = {
                 @Index(name = "idx_user", columnList = "username"),
-        })
+        },
+        uniqueConstraints = { @UniqueConstraint(name = "UniqueName", columnNames = { "name" }) })
 public class Ingredient{
     @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

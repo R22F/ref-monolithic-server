@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "food",
         indexes = {
                 @Index(name = "idx_user", columnList = "username"),
-        })
+        },
+        uniqueConstraints = { @UniqueConstraint(name = "UniqueName", columnNames = { "name" })}
+)
 public class Food {
     @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
