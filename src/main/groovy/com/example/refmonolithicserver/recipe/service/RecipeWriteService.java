@@ -59,7 +59,9 @@ public class RecipeWriteService {
     }
 
     public Object removeRecipeByIngredientId(Long ingredientId) {
-        recipeRepository.existsByIngredientId(ingredientId);
+        List<Recipe> recipes = recipeRepository.findByIngredientId(ingredientId);
+        for (Recipe recipe : recipes)
+            recipeRepository.deleteByIngredientId(recipe.getIngredientId());
         return ingredientId;
     }
 }

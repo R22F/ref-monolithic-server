@@ -44,4 +44,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
      * @return true / false
      */
     Boolean existsByIngredientId(Long ingredientId);
+
+    List<Recipe> findByIngredientId(Long ingredientId);
 }
