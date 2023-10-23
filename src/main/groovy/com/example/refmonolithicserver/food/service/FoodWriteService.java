@@ -23,11 +23,6 @@ public class FoodWriteService {
         return foodRepository.save(dto.toEntity(username, id));
     }
 
-//    public Long removeItem(Long id) {
-//        foodRepository.deleteById(id);
-//        return id;
-//    }
-
     public Long removeRecipeByFood(Long foodId) {
 
         recipeRepository.deleteByFoodId(foodId);
