@@ -15,9 +15,15 @@ public class SettlementReadService {
 
     private final SalesHistoryRepository salesHistoryRepository;
 
-    public SettlementResponseDto get(LocalDate date) {
+    public SettlementResponseDto getHistory(LocalDate date, String user) {
 
-        List<SalesHistory> salesHistories = salesHistoryRepository.findAllBySalesDate(date);
+        List<SalesHistory> salesHistories = salesHistoryRepository.findAllBySalesDate(date, user);
+        return new SettlementResponseDto(salesHistories);
+    }
+
+    public SettlementResponseDto getHistory(LocalDate startDate, LocalDate endDate, String user) {
+
+        List<SalesHistory> salesHistories = salesHistoryRepository.findAllBySalesDate(startDate, endDate, user);
         return new SettlementResponseDto(salesHistories);
     }
 }
