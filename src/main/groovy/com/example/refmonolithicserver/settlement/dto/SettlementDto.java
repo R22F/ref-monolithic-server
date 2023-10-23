@@ -2,6 +2,7 @@ package com.example.refmonolithicserver.settlement.dto;
 
 import com.example.refmonolithicserver.settlement.domain.SalesHistory;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +18,7 @@ public record SettlementDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class SettlementRequestDto{
-        private Integer sum;
-        private List<FoodInfo> foods;
+        @NotEmpty(message = "foods : not null") private List<FoodInfo> foods;
     }
 
     @Data
