@@ -17,6 +17,7 @@ public class WebConfig{
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://localhost:5000");
         config.addAllowedOrigin("https://ref-client.kro.kr");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
