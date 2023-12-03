@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.relational.core.mapping.Embedded;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public record SettlementDto() {
                     salesHistory.getFoodId(),
                     salesHistory.getFoodName(),
                     salesHistory.getFixedPrice(),
-                    salesHistory.getCount()
+                    salesHistory.getCount(),
+                    salesHistory.getNote()
             );
         }
     }
@@ -58,6 +60,7 @@ public record SettlementDto() {
         @NotBlank(message = "name : not null") private String name;
         @NotNull(message = "fixedPrice : not null") private Integer fixedPrice;
         @NotNull(message = "count : not null") private Integer count;
+        @Embedded.Nullable private String note;
 
         public SalesHistory toEntity(String username){
             return SalesHistory.builder()
@@ -67,6 +70,7 @@ public record SettlementDto() {
                     .foodName(this.name)
                     .salesDate(LocalDate.now())
                     .username(username)
+                    .note(this.note)
                     .build();
         }
     }
@@ -81,6 +85,7 @@ public record SettlementDto() {
         @NotNull(message = "foodId : not null") private Long foodId;
         @NotBlank(message = "foodName : not null") private String foodName;
         @NotNull(message = "salesDate : not null") private LocalDate salesDate;
+        @Embedded.Nullable private String note;
 
         public SalesHistory toEntity(String username){
             return SalesHistory.builder()
@@ -91,6 +96,7 @@ public record SettlementDto() {
                     .foodName(this.foodName)
                     .salesDate(this.salesDate)
                     .username(username)
+                    .note(this.note)
                     .build();
         }
     }

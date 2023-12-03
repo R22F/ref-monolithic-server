@@ -46,6 +46,9 @@ public class SalesHistory{
     @Column(name = "username", length = 128)
     private String username;
 
+    @Column(name = "note", length = 20)
+    private String note;
+
     public Integer getTotalPrice(){
         return this.fixedPrice * this.count;
     }
