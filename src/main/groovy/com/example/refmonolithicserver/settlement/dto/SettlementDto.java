@@ -20,6 +20,7 @@ public record SettlementDto() {
     @NoArgsConstructor
     public static class SettlementRequestDto{
         @NotEmpty(message = "foods : not null") private List<FoodInfo> foods;
+        private LocalDate reqDate;
     }
 
     @Data
@@ -56,7 +57,7 @@ public record SettlementDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FoodInfo{
-        @NotNull(message = "foodId : not null") private Long foodId;
+        private Long foodId;
         @NotBlank(message = "name : not null") private String name;
         @NotNull(message = "fixedPrice : not null") private Integer fixedPrice;
         @NotNull(message = "count : not null") private Integer count;
@@ -69,6 +70,17 @@ public record SettlementDto() {
                     .foodId(this.foodId)
                     .foodName(this.name)
                     .salesDate(LocalDate.now())
+                    .username(username)
+                    .note(this.note)
+                    .build();
+        }
+        public SalesHistory toEntity(String username, LocalDate date){
+            return SalesHistory.builder()
+                    .count(this.count)
+                    .fixedPrice(this.fixedPrice)
+                    .foodId(this.foodId)
+                    .foodName(this.name)
+                    .salesDate(date)
                     .username(username)
                     .note(this.note)
                     .build();

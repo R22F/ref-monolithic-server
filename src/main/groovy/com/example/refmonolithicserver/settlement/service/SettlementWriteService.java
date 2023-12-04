@@ -31,10 +31,10 @@ public class SettlementWriteService {
 
     public LocalDate set(SettlementRequestDto dto, String username) {
 
-        LocalDate today = LocalDate.now();
+        LocalDate date = dto.getReqDate();
 
         for (FoodInfo info: dto.getFoods()){
-            salesHistoryRepository.save(info.toEntity(username));
+            salesHistoryRepository.save(info.toEntity(username, date));
 
             // ingredient 정보도 수정 되어야 함
 
@@ -56,7 +56,7 @@ public class SettlementWriteService {
             }
         }
 
-        return today;
+        return date;
     }
 
     public SalesHistory update(SalesRequestDto dto, String username) {
