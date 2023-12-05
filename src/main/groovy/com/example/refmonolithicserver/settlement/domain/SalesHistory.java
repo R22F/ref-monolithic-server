@@ -49,6 +49,13 @@ public class SalesHistory{
     @Column(name = "note", length = 20)
     private String note;
 
+    public SalesHistory modifyInfo(int count, String note){
+        this.count = count;
+        this.note = note;
+
+        return this;
+    }
+
     public Integer getTotalPrice(){
         return this.fixedPrice * this.count;
     }

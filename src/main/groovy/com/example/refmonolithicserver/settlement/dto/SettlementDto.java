@@ -57,7 +57,7 @@ public record SettlementDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FoodInfo{
-        private Long foodId;
+        private Long id;
         @NotBlank(message = "name : not null") private String name;
         @NotNull(message = "fixedPrice : not null") private Integer fixedPrice;
         @NotNull(message = "count : not null") private Integer count;
@@ -67,7 +67,7 @@ public record SettlementDto() {
             return SalesHistory.builder()
                     .count(this.count)
                     .fixedPrice(this.fixedPrice)
-                    .foodId(this.foodId)
+                    .foodId(this.id)
                     .foodName(this.name)
                     .salesDate(LocalDate.now())
                     .username(username)
@@ -78,7 +78,7 @@ public record SettlementDto() {
             return SalesHistory.builder()
                     .count(this.count)
                     .fixedPrice(this.fixedPrice)
-                    .foodId(this.foodId)
+                    .foodId(this.id)
                     .foodName(this.name)
                     .salesDate(date)
                     .username(username)

@@ -31,6 +31,12 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
             "order by food.name")
     List<Food> findAllByUsername(@Param("username") String username);
 
+    @Query("select food " +
+            "from Food food " +
+            "where food.username = :username " +
+            "and food.name = :name " +
+            "order by food.name")
+    Optional<Food> findByName(@Param("name") String name, @Param("username") String username);
     /**
      *
      * @param id must not be {@literal null}.

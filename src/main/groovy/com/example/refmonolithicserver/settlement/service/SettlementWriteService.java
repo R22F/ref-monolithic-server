@@ -2,6 +2,8 @@ package com.example.refmonolithicserver.settlement.service;
 
 import com.example.refmonolithicserver.common.exception.BusinessException;
 import com.example.refmonolithicserver.common.exception.ErrorCode;
+import com.example.refmonolithicserver.food.dao.FoodRepository;
+import com.example.refmonolithicserver.food.domain.Food;
 import com.example.refmonolithicserver.ingredient.dao.IngredientRepository;
 import com.example.refmonolithicserver.ingredient.domain.Ingredient;
 import com.example.refmonolithicserver.recipe.dao.RecipeRepository;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static com.example.refmonolithicserver.common.exception.ExceptionMessage.INGREDIENT_NOT_FOUND;
 
@@ -34,10 +38,12 @@ public class SettlementWriteService {
         LocalDate date = dto.getReqDate();
 
         for (FoodInfo info: dto.getFoods()){
-            salesHistoryRepository.save(info.toEntity(username, date));
-
-            // ingredient 정보도 수정 되어야 함
-
+            List<SalesHistory> salesHistories = salesHistoryRepository.findAllBySalesDate(dto.getReqDate(), username);
+            for (SalesHistory salesHistory:salesHistories) {
+                if (Objects.equals(salesHistory.getFoodName(), info.getName())) {
+                    salesHistoryRepository.save(salesHistory.modifyInfo(info.getCount(), info.getNote()));
+                }
+            }
             /* @brief
              *  1. SettlementRequestDto->foodInfo->foodId를 가져옴
              *  2. 해당 foodId를 사용 하는 recipe 를 가져옴
@@ -46,7 +52,7 @@ public class SettlementWriteService {
              *   : fixedQuantity = ingredient.remainQuantity - recipe.quantity
              *   : fixedQuantity 를 alertQuantity 와 비교
              */
-            List<Recipe> recipes = recipeRepository.findByFoodId(info.getFoodId());
+            List<Recipe> recipes = recipeRepository.findByFoodId(info.getId());
             for (Recipe recipe:recipes){
                 Ingredient ingredient = ingredientRepository.findById(
                         recipe.getIngredientId()).orElseThrow(
