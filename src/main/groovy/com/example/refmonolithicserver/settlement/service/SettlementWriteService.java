@@ -15,6 +15,7 @@ import com.example.refmonolithicserver.settlement.dto.SettlementDto.SalesRequest
 import com.example.refmonolithicserver.settlement.dto.SettlementDto.SettlementRequestDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ import java.util.Optional;
 
 import static com.example.refmonolithicserver.common.exception.ExceptionMessage.INGREDIENT_NOT_FOUND;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -36,13 +38,24 @@ public class SettlementWriteService {
     public LocalDate set(SettlementRequestDto dto, String username) {
 
         LocalDate date = dto.getReqDate();
-
         for (FoodInfo info: dto.getFoods()){
-            List<SalesHistory> salesHistories = salesHistoryRepository.findAllBySalesDate(dto.getReqDate(), username);
-            for (SalesHistory salesHistory:salesHistories) {
-                if (Objects.equals(salesHistory.getFoodName(), info.getName())) {
-                    salesHistoryRepository.save(salesHistory.modifyInfo(info.getCount(), info.getNote()));
+            Optional<SalesHistory> history = salesHistoryRepository.findByFoodNameAndSalesDate(info.getName(), date);
+            int originQuantity = 0;
+            if (history.isPresent()){
+                SalesHistory salesHistory = history.get();
+                originQuantity = salesHistory.getCount();
+                salesHistory.modifyInfo(info.getCount(), info.getNote(), info.getFixedPrice());
+            }
+            else {
+                List<Recipe> recipes = recipeRepository.findByFoodId(info.getId());
+                double primePrice = 0.0;
+                for (Recipe recipe:recipes){
+                    Ingredient ingredient = ingredientRepository.findById(
+                            recipe.getIngredientId()).orElseThrow(
+                            () -> new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND));
+                    primePrice += ingredient.getPrimePrice() * recipe.getQuantity();
                 }
+                salesHistoryRepository.save(info.toEntity(username, date, primePrice));
             }
             /* @brief
              *  1. SettlementRequestDto->foodInfo->foodId를 가져옴
@@ -57,7 +70,7 @@ public class SettlementWriteService {
                 Ingredient ingredient = ingredientRepository.findById(
                         recipe.getIngredientId()).orElseThrow(
                                 () -> new BusinessException(ErrorCode.NOT_FOUND, INGREDIENT_NOT_FOUND));
-                int fixedQuantity = ingredient.getRemainQuantity() - recipe.getQuantity();
+                int fixedQuantity = ingredient.getRemainQuantity() - (info.getCount()-originQuantity)*recipe.getQuantity();
                 ingredientRepository.save(ingredient.modifyQuantity(fixedQuantity));
             }
         }

@@ -27,6 +27,7 @@ public record SettlementDto() {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class SettlementResponseDto{
+        private Double primePrice;
         private Integer sum;
         private List<FoodInfo> foods;
 
@@ -34,11 +35,14 @@ public record SettlementDto() {
 
             List<FoodInfo> foodInfos = new ArrayList<>();
             int sum = 0;
+            double primePrice = 0.0;
             for (SalesHistory salesHistory:salesHistories){
                 foodInfos.add(toDto(salesHistory));
-                sum+= salesHistory.getTotalPrice();
+                sum+= salesHistory.getTotalFixedPrice();
+                primePrice+=salesHistory.getTotalPrimePrice();
             }
             this.sum = sum;
+            this.primePrice = primePrice;
             this.foods = foodInfos;
         }
 
@@ -47,6 +51,7 @@ public record SettlementDto() {
                     salesHistory.getFoodId(),
                     salesHistory.getFoodName(),
                     salesHistory.getFixedPrice(),
+                    salesHistory.getPrimePrice(),
                     salesHistory.getCount(),
                     salesHistory.getNote()
             );
@@ -60,6 +65,7 @@ public record SettlementDto() {
         private Long id;
         @NotBlank(message = "name : not null") private String name;
         @NotNull(message = "fixedPrice : not null") private Integer fixedPrice;
+        @NotNull(message = "primePrice : not null") private Double primePrice;
         @NotNull(message = "count : not null") private Integer count;
         @Embedded.Nullable private String note;
 
@@ -67,6 +73,7 @@ public record SettlementDto() {
             return SalesHistory.builder()
                     .count(this.count)
                     .fixedPrice(this.fixedPrice)
+                    .primePrice(this.primePrice)
                     .foodId(this.id)
                     .foodName(this.name)
                     .salesDate(LocalDate.now())
@@ -74,10 +81,11 @@ public record SettlementDto() {
                     .note(this.note)
                     .build();
         }
-        public SalesHistory toEntity(String username, LocalDate date){
+        public SalesHistory toEntity(String username, LocalDate date, Double primePrice){
             return SalesHistory.builder()
                     .count(this.count)
                     .fixedPrice(this.fixedPrice)
+                    .primePrice(primePrice)
                     .foodId(this.id)
                     .foodName(this.name)
                     .salesDate(date)

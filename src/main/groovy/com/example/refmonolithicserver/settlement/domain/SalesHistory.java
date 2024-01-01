@@ -36,6 +36,9 @@ public class SalesHistory{
     @Column(name = "fixed_price")
     private Integer fixedPrice;
 
+    @Column(name= "prime_price")
+    private Double primePrice;
+
     @Column(name = "count")
     private Integer count;
 
@@ -56,7 +59,24 @@ public class SalesHistory{
         return this;
     }
 
-    public Integer getTotalPrice(){
+    public SalesHistory modifyInfo(int count, String note, int fixedPrice){
+        this.count = count;
+        this.note = note;
+        this.fixedPrice = fixedPrice;
+
+        return this;
+    }
+
+    public SalesHistory setPrimePrice(Double primePrice){
+        this.primePrice = primePrice * this.count;
+        return this;
+    }
+
+    public Integer getTotalFixedPrice(){
         return this.fixedPrice * this.count;
+    }
+
+    public Double getTotalPrimePrice(){
+        return this.primePrice * this.count;
     }
 }

@@ -20,6 +20,14 @@ public interface SalesHistoryRepository extends JpaRepository<SalesHistory, Long
 
     /**
      *
+     * @param foodName
+     * @param date
+     * @return
+     */
+    Optional<SalesHistory> findByFoodNameAndSalesDate(String foodName, LocalDate date);
+
+    /**
+     *
      * @param date date must not be {@literal null}.
      * @return Retrieve all by corresponding date
      */
