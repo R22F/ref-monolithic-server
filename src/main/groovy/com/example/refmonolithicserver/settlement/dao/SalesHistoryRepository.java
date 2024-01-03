@@ -34,7 +34,8 @@ public interface SalesHistoryRepository extends JpaRepository<SalesHistory, Long
     @Query("select salesHistory " +
             "from SalesHistory salesHistory " +
             "where salesHistory.salesDate = :date " +
-            "and salesHistory.username = :user")
+            "and salesHistory.username = :user " +
+            "order by salesHistory.salesDate desc ")
     List<SalesHistory> findAllBySalesDate(
             @Param("date") LocalDate date,
             @Param("user") String user);
@@ -43,7 +44,8 @@ public interface SalesHistoryRepository extends JpaRepository<SalesHistory, Long
             "from SalesHistory salesHistory " +
             "where salesHistory.salesDate " +
             "   between :startDate and :endDate " +
-            "and salesHistory.username = :user")
+            "and salesHistory.username = :user " +
+            "order by salesHistory.salesDate desc ")
     List<SalesHistory> findAllBySalesDate(
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,

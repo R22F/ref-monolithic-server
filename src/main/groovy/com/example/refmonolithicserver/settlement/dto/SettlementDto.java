@@ -12,6 +12,7 @@ import org.springframework.data.relational.core.mapping.Embedded;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record SettlementDto() {
 
@@ -43,7 +44,20 @@ public record SettlementDto() {
             }
             this.sum = sum;
             this.primePrice = primePrice;
-            this.foods = foodInfos;
+            this.foods = foodInfos.stream()
+                    .collect(Collectors.groupingBy(FoodInfo::getName))
+                    .entrySet()
+                    .stream()
+                    .map(entry->{
+                        List<FoodInfo> groupedList = entry.getValue();
+                        int count = groupedList.stream()
+                                .mapToInt(FoodInfo::getCount)
+                                .sum();
+                        FoodInfo foodInfo = groupedList.get(0);
+                        foodInfo.setCount(count);
+                        return groupedList.get(0);
+                    })
+                    .collect(Collectors.toList());
         }
 
         public FoodInfo toDto(SalesHistory salesHistory){
